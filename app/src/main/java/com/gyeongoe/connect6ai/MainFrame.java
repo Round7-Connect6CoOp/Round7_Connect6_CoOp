@@ -35,8 +35,6 @@ public class MainFrame extends JFrame {
 	MainFrame(){
 		super(TITLE);
 		Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
-		
-		
 		monitorWidth = resolution.width;
 		monitorHeight = resolution.height;
 		
