@@ -2,6 +2,8 @@ package com.gyeongoe.connect6ai.pannels;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
@@ -16,6 +18,10 @@ public class ControlPanel extends JPanel {
 	private RoundButton startButton = new RoundButton("Start", Color.GRAY);
 	private RoundButton reDoButton = new RoundButton("Undo");
 	private RoundButton restartButton = new RoundButton("New Game");
+	private RoundButton firstButton = new RoundButton("Fir", Color.GRAY);
+	private RoundButton secondButton = new RoundButton("Sec", Color.GRAY);
+	private Boolean firstCheck = false;
+	private Boolean secondCheck = false;
 	
 	Font normalFont = new Font("",Font.BOLD, 30);
 	public ControlPanel() {
@@ -46,22 +52,52 @@ public class ControlPanel extends JPanel {
 			}
 		});
 		
-		startButton.setEnabled(false);
-		startButton.setFont(normalFont);
-		startButton.setBounds(15, 220, 210, 50);
-		
 		reDoButton.setFont(normalFont);
 		reDoButton.setBounds(15, 80, 210, 50);
 		
 		restartButton.setFont(normalFont);
 		restartButton.setBounds(15, 145, 210, 50);
 		
+		startButton.setEnabled(false);
+		startButton.setFont(normalFont);
+		startButton.setBounds(15, 220, 210, 50);
+		
+		firstButton.setFont(normalFont);
+		firstButton.setBounds(15, 285, 100, 50);
+		firstButton.addActionListener(listener);
+		
+		secondButton.setFont(normalFont);
+		secondButton.setBounds(120, 285, 100, 50);
+		secondButton.addActionListener(listener);
+		
 		this.add(restartButton);
 		this.add(reDoButton);
 		this.add(startButton);
+		this.add(firstButton);
+		this.add(secondButton);
 		this.add(numberOfDisabledPointTextField);
 	}
-
+	
+	ActionListener listener = new ActionListener() {
+		@Override
+        public void actionPerformed(ActionEvent e) {
+			String input = e.getActionCommand();
+			if(input.equals("Sec")) {
+				firstCheck = true;
+				firstButton.setColor("Fir", new Color(61,205,91));
+				secondCheck = false; 
+				secondButton.setColor("Sec", Color.GRAY);
+			}
+			
+			else if(input.equals("Sec")) {
+				secondCheck = true;  
+				secondButton.setColor("Sec", new Color(61,205,91));
+				firstCheck = false;
+				firstButton.setColor("Fir", Color.GRAY);
+			}
+	    }
+	};
+	
 	public int getNumberOfDisabledPoint() {
 		return numberOfDisabledPoint;
 	}
@@ -100,5 +136,22 @@ public class ControlPanel extends JPanel {
 
 	public void setNumberOfDisabledPointTextField(JTextField numberOfDisabledPointTextField) {
 		this.numberOfDisabledPointTextField = numberOfDisabledPointTextField;
+	}
+	
+	public RoundButton getFirstButton() {
+		return firstButton;
+	}
+
+	public void setgetFirstButton(RoundButton firstButton) {
+		this.firstButton = firstButton;
+	}
+	
+	
+	public RoundButton getSecondButton() {
+		return secondButton;
+	}
+
+	public void setSecondButton(RoundButton secondButton) {
+		this.secondButton = secondButton;
 	}
 }
