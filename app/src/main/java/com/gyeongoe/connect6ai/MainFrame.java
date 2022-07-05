@@ -14,6 +14,7 @@ import java.awt.geom.Ellipse2D;
 
 import javax.swing.*;
 
+import com.gyeongoe.connect6ai.buttons.RoundButton;
 import com.gyeongoe.connect6ai.data.MyData;
 import com.gyeongoe.connect6ai.pannels.*;
 
@@ -27,6 +28,7 @@ public class MainFrame extends JFrame {
 	private JPanel mainPanel = new JPanel();
 	private JPanel infoPanel = new JPanel();
 	private JLabel infoLabel = new JLabel("Black");
+	RoundButton nextButton = new RoundButton("Next");
 	Font normalFont = new Font("",Font.BOLD, 80);
 	Font winFont = new Font("",Font.BOLD, 50);
 	
@@ -53,6 +55,7 @@ public class MainFrame extends JFrame {
 		goBoard = new GoBoard();
 		controlPanel = new ControlPanel();
 
+		controlPanel.setBackground(Color.ORANGE);
 		controlPanel.getStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -175,6 +178,14 @@ public class MainFrame extends JFrame {
 					infoLabel.setText("Black");
 					infoLabel.setForeground(Color.WHITE);
 				}
+			}
+		});
+		
+		nextButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		
