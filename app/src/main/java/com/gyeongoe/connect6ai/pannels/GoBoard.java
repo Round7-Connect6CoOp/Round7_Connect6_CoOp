@@ -36,6 +36,8 @@ public class GoBoard extends JPanel {
 	private boolean start = false;
 	private boolean whiteWin = false;
 	private boolean blackWin = false;
+	private boolean areWeFirst = false;
+	private boolean areWeSecond = false;
 	
 	private int blockCount = 0;
 	private int blockNumber = 4;
@@ -455,6 +457,22 @@ public class GoBoard extends JPanel {
 
 	public int[][] getGameMatrix() {
 		return gameMatrix;
+	}
+
+	public boolean isAreWeFirst() {
+		return areWeFirst;
+	}
+
+	public void setAreWeFirst(boolean areWeFirst) {
+		this.areWeFirst = areWeFirst;
+	}
+
+	public boolean isAreWeSecond() {
+		return areWeSecond;
+	}
+
+	public void setAreWeSecond(boolean areWeSecond) {
+		this.areWeSecond = areWeSecond;
 	}
 
 	public void setGameMatrix(int[][] gameMatrix) {
