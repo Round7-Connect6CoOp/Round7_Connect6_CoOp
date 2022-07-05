@@ -185,11 +185,17 @@ public class MainFrame extends JFrame {
 		nextButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				int x = (int) (Math.random() * 19);
+				int y = (int) (Math.random() * 19);
+				System.out.println("x: " + x + " y: " + y);
+				MyData data = new MyData(x, y, Color.BLUE);
+				MyData.clickedPoint.add(data);
+				goBoard.repaint();
 			}
 		});
+		nextButton.setBounds(600, 5, 100, 100);
 		
+		this.add(nextButton);
 		this.add(infoPanel);
 		this.add(controlPanel);
 		this.add(goBoard);
