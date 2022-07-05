@@ -154,4 +154,20 @@ public class ControlPanel extends JPanel {
 	public void setSecondButton(RoundButton secondButton) {
 		this.secondButton = secondButton;
 	}
+
+	public Boolean getFirstCheck() {
+		return firstCheck;
+	}
+
+	public void setFirstCheck(Boolean firstCheck) {
+		this.firstCheck = firstCheck;
+	}
+
+	public Boolean getSecondCheck() {
+		return secondCheck;
+	}
+
+	public void setSecondCheck(Boolean secondCheck) {
+		this.secondCheck = secondCheck;
+	}
 }

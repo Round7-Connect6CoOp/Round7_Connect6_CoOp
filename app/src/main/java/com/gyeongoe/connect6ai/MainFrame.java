@@ -29,6 +29,7 @@ public class MainFrame extends JFrame {
 	private JPanel infoPanel = new JPanel();
 	private JLabel infoLabel = new JLabel("Black");
 	RoundButton nextButton = new RoundButton("Next");
+	
 	Font normalFont = new Font("",Font.BOLD, 80);
 	Font winFont = new Font("",Font.BOLD, 50);
 	
@@ -58,6 +59,12 @@ public class MainFrame extends JFrame {
 		controlPanel.getStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(controlPanel.getFirstCheck()) {
+					goBoard.setAreWeFirst(true);
+				}
+				else {
+					goBoard.setAreWeSecond(true);
+				}
 				goBoard.setStart(true);
 				goBoard.setBlockNumber(controlPanel.getNumberOfDisabledPoint());
 			}
@@ -134,6 +141,8 @@ public class MainFrame extends JFrame {
 				goBoard.repaint();
 			}
 		});
+		
+		
 		
 		infoPanel.setBackground(Color.BLACK);
 		infoPanel.setBounds(700, 350, 250, 250);
