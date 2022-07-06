@@ -86,25 +86,37 @@ public class GoBoard extends JPanel {
 					        				gameMatrix[i][j] = 1;
 					        			}
 					        			else {
-					        				if(whiteTurnFirst) {
-					        					x = i;
-					        					y = j;
-					        					gameMatrix[i][j] = 2;
-					        					currentColor = Color.WHITE;
-					        					if(whiteTurnSecond) {
-					        						MyData newData = new MyData(i, j, currentColor);
-					        						MyData.clickedPoint.add(newData);
-					        						whiteTurnFirst=false;
-					        						blackTurnFirst = true;
-					        					}
-					        					else {
-					        						MyData newData = new MyData(i, j, currentColor);
-					        						MyData.clickedPoint.add(newData);
-					        						whiteTurnSecond = true;
-					        						blackTurnSecond = false;
-					        					}
+					        				if(areWeFirst) { // We are first
+					        					if(whiteTurnFirst) {
+						        					x = i;
+						        					y = j;
+						        					gameMatrix[i][j] = 2;
+						        					currentColor = Color.WHITE;
+						        					if(whiteTurnSecond) {
+						        						MyData newData = new MyData(i, j, currentColor);
+						        						MyData.clickedPoint.add(newData);
+//						        						whiteTurnFirst=false;
+						        						blackTurnFirst = true;
+						        						for(int k = 0; k < 2; k++) {
+						        							int x = (int) (Math.random() * 19);
+							        						int y = (int) (Math.random() * 19);
+							        						System.out.println("x: " + x + " y: " + y);
+							        						MyData data = new MyData(x, y, Color.BLUE);
+							        						MyData.clickedPoint.add(data);
+							        						whiteTurnSecond = false;
+						        						}
+						        						
+						        					}
+						        					else {
+						        						MyData newData = new MyData(i, j, currentColor);
+						        						MyData.clickedPoint.add(newData);
+						        						whiteTurnSecond = true;
+						        						blackTurnSecond = false;
+						        					}
+						        				}
 					        				}
-					        				else {
+					        				else {	// We are second
+						        				
 					        					x = i;
 					        					y = j;
 					        					currentColor = Color.BLACK;
@@ -114,16 +126,25 @@ public class GoBoard extends JPanel {
 					        						MyData.clickedPoint.add(newData);
 					        						
 					        						whiteTurnFirst = true;
-					        						blackTurnFirst = false;
+//					        						blackTurnFirst = false;
+					        						for(int k = 0; k < 2; k++) {
+					        							int x = (int) (Math.random() * 19);
+						        						int y = (int) (Math.random() * 19);
+						        						System.out.println("x: " + x + " y: " + y);
+						        						MyData data = new MyData(x, y, Color.BLUE);
+						        						MyData.clickedPoint.add(data);
+						        						blackTurnSecond = false;
+					        						}
 					        					}
 					        					else {
 					        						MyData newData = new MyData(i, j, currentColor);
-					        						
 					        						MyData.clickedPoint.add(newData);
 					        						blackTurnSecond = true;
 					        						whiteTurnSecond = false;
 					        					}
+						        				
 					        				}
+					        				
 					        			}
 					        			repaint();
 					        			int result = -1;
