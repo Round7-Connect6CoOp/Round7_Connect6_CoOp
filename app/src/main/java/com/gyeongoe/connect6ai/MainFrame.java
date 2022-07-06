@@ -28,7 +28,6 @@ public class MainFrame extends JFrame {
 	private JPanel mainPanel = new JPanel();
 	private JPanel infoPanel = new JPanel();
 	private JLabel infoLabel = new JLabel("Black");
-	RoundButton nextButton = new RoundButton("Next");
 	
 	Font normalFont = new Font("",Font.BOLD, 80);
 	Font winFont = new Font("",Font.BOLD, 50);
@@ -54,6 +53,8 @@ public class MainFrame extends JFrame {
 	private void createFrame() {
 		goBoard = new GoBoard();
 		controlPanel = new ControlPanel();
+		
+		
 
 		controlPanel.setBackground(Color.ORANGE);
 		controlPanel.getStartButton().addActionListener(new ActionListener() {
@@ -67,6 +68,12 @@ public class MainFrame extends JFrame {
 				}
 				goBoard.setStart(true);
 				goBoard.setBlockNumber(controlPanel.getNumberOfDisabledPoint());
+				for(int i = 0; i < 19; i++) {
+					for(int j = 0; j < 19; j++) {
+						MyData.influnceMatrix[i][j] = 0;
+					}
+				}
+				
 			}
 			
 		});
@@ -138,6 +145,8 @@ public class MainFrame extends JFrame {
 				infoLabel.setFont(normalFont);
 				controlPanel.getStartButton().setEnabled(false);
 				controlPanel.getReDoButton().setEnabled(true);
+				controlPanel.getFirstButton().setSelected(false);
+				controlPanel.getSecondButton().setSelected(false);
 				goBoard.repaint();
 			}
 		});
@@ -189,20 +198,6 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
-		nextButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int x = (int) (Math.random() * 19);
-				int y = (int) (Math.random() * 19);
-				System.out.println("x: " + x + " y: " + y);
-				MyData data = new MyData(x, y, Color.BLUE);
-				MyData.clickedPoint.add(data);
-				goBoard.repaint();
-			}
-		});
-		nextButton.setBounds(600, 5, 100, 100);
-		
-		this.add(nextButton);
 		this.add(infoPanel);
 		this.add(controlPanel);
 		this.add(goBoard);
