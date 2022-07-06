@@ -47,6 +47,7 @@ public class GoBoard extends JPanel {
 	private int y = -1;
 	
 	public GoBoard(){
+		MyData.pointsTree.put(19*9+9, null);
 		setBounds(5, 5, 600, 600);
 		setBackground(new Color(220, 179, 92));
 		for(int i=0; i<=18; i++) {
@@ -54,6 +55,17 @@ public class GoBoard extends JPanel {
         		gameMatrix[i][j] = 0;
         	}
 		}
+		
+		MyData.pointsTree.put(setHashKey(9, 9), 0);
+		while(MyData.pointsTree.size() < 343) {
+			int tempX = (int) (Math.random()*19);
+			int tempY = (int) (Math.random()*19);
+			if(MyData.pointsTree.containsKey(setHashKey(tempX, tempY))) continue;
+			MyData.pointsTree.put(setHashKey(tempX, tempY), 0);
+			System.out.println(setHashKey(tempX, tempY));
+		}
+		
+		
 		this.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -604,5 +616,15 @@ public class GoBoard extends JPanel {
 		this.blackWin = blackWin;
 	}
 	
+	public int setHashKey(int x, int y ) {
+		return 18*x+y;
+	}
 	
+	public int getXFromHashKry(int key) {
+		return key/18;
+	}
+	
+	public int getYFromHashKry(int key) {
+		return key%18;
+	}
 }
