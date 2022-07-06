@@ -97,13 +97,13 @@ public class GoBoard extends JPanel {
 				        					e1.printStackTrace();
 				        				}
 				        				
-					        			System.out.println(i+ " " + j);
 					        			if(!firstClick) {
 					        				currentColor = Color.BLACK;
 					        				MyData newData = new MyData(i, j, currentColor);
 					        				MyData.clickedPoint.add(newData);
-					        				MyData.influnceMatrix[i][j] = -10;
+					        				MyData.influnceMatrix[i][j] = 10;
 				        					for(int a = 0; a < 11; a++) {
+				        						if(a==5) continue;
 				        						MyData.influnceMatrix[i][j-5+a] +=1;
 				        						MyData.influnceMatrix[i-5+a][j] +=1;
 				        						MyData.influnceMatrix[i-5+a][j-5+a] +=1;
@@ -117,7 +117,6 @@ public class GoBoard extends JPanel {
 					        					for(int k = 0; k < 2; k++) {
 				        							int p = (int) (Math.random() * 19);
 					        						int q = (int) (Math.random() * 19);
-					        						System.out.println("x: " + x + " y: " + y);
 					        						MyData data = new MyData(p, q, Color.WHITE);
 					        						MyData.clickedPoint.add(data);
 				        						}
@@ -135,10 +134,10 @@ public class GoBoard extends JPanel {
 						        					gameMatrix[i][j] = 2;
 						        					currentColor = Color.WHITE;
 						        					//START POINT: working on influnce Matrix!
-						        					MyData.influnceMatrix[i][j] = -10;
-						        					for(int a = 0; a < 4; a++) {
-						        						
-						        					}
+//						        					MyData.influnceMatrix[i][j] = -10;
+//						        					for(int a = 0; a < 4; a++) {
+//						        						
+//						        					}
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
@@ -149,7 +148,6 @@ public class GoBoard extends JPanel {
 						        							
 						        							int p = (int) (Math.random() * 19);
 							        						int q = (int) (Math.random() * 19);
-							        						System.out.println("x: " + x + " y: " + y);
 							        						MyData data = new MyData(p, q, Color.BLACK);
 							        						MyData.clickedPoint.add(data);
 							        						whiteTurnSecond = false;
@@ -227,7 +225,6 @@ public class GoBoard extends JPanel {
 					        		}
 				        		}
 				        		else {
-				        			System.out.println("Already Taken");
 				        		}
 			        		}
 			        		else {
@@ -255,6 +252,7 @@ public class GoBoard extends JPanel {
 			        	}
 			        	System.out.println("");
 			        }
+					System.out.println(" ");
 				}
 				else {
 					System.out.println("Press start");
