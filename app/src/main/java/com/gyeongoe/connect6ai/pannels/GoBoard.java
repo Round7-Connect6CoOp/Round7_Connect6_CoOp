@@ -57,6 +57,7 @@ public class GoBoard extends JPanel {
         	}
 		}
 		
+		infoMatrix[9][9] = setHashKey(9, 9);
 		MyData.pointsTree.put(setHashKey(9, 9), null);
 		while(MyData.pointsTree.size() < 361) {
 			int tempX = (int) (Math.random()*19);
@@ -130,9 +131,11 @@ public class GoBoard extends JPanel {
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
+						        						newData.getInformation(gameMatrix);
 //						        						whiteTurnFirst=false;
 						        						blackTurnFirst = true;
 						        						for(int k = 0; k < 2; k++) {
+						        							
 						        							int p = (int) (Math.random() * 19);
 							        						int q = (int) (Math.random() * 19);
 							        						System.out.println("x: " + x + " y: " + y);
@@ -144,6 +147,7 @@ public class GoBoard extends JPanel {
 						        					else {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
+						        						newData.getInformation(gameMatrix);
 						        						whiteTurnSecond = true;
 						        					}
 						        				}

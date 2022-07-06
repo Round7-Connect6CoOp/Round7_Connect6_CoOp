@@ -20,10 +20,11 @@ public class MyData {
 	//Hash function 19*x + y
 	public static TreeMap<Integer,MyData> pointsTree = new TreeMap<Integer,MyData>();
 	
-	//Hash function for 6 items: When black won: 5592405; When white won: 11184810
+	//Hash function for 6 items: When black won: 5461; When white won: 10922
 	
 	public static int count = 0;
 	private int[][] info = new int[4][11];
+	private int[][] vectorKey = new int[4][11];
 	
 	public MyData(int x, int y, Color color) {
 		this.x = x;
@@ -32,23 +33,24 @@ public class MyData {
 		
 		// Horizontal 0, Vertical 1, Left-Right Diagonal 2, Right-Left Diagonal 3
 		for(int i=0; i<4; i++) {
-			info[i][5] = setHashKey(x,y);
+			vectorKey[i][5] = setHashKey(x,y);
 			try {
 				for(int j=0; j<11; j++) {
 					if(j == 5) {
 						continue;
 					}
 					if(i==0) { // horizontal
-						info[i][j] = setHashKey(x-5+j,y);
+						
+						vectorKey[i][j] = setHashKey(x,y-5+j);
 					}
 					else if(i==1) { //vertical
-						info[i][j] = setHashKey(x,y-5+j);
+						vectorKey[i][j] =  setHashKey(x-5+j,y);
 					}
 					else if(i==2) { // Left-Right
-						info[i][j] = setHashKey(x-5+j,y-5+j);
+						vectorKey[i][j] = setHashKey(x-5+j,y-5+j);
 					}
 					else if(i==3) { // Right-Left
-						info[i][j] = setHashKey(x+5-j,y-5+j);
+						vectorKey[i][j] = setHashKey(x+5-j,y-5+j);
 					}
 				}
 			} catch(Exception e) {
@@ -56,6 +58,32 @@ public class MyData {
 			}
 			
 		}
+		
+		for(int i=0; i<4; i++) {
+			try {
+				for(int j=0; j<11; j++) {
+					if(i==0) { // horizontal
+						System.out.println("Horizontal line : "+ info[i][j]); 
+					}
+					else if(i==1) { //vertical
+						System.out.println("Vertical line : "+ info[i][j]); 
+					}
+					else if(i==2) { // Left-Right
+						System.out.println("Left-Right line : "+ info[i][j]); 
+					}
+					else if(i==3) { // Right-Left
+						System.out.println("Right-Left line : "+ info[i][j]); 
+					}
+				}
+			} catch(Exception e) {
+				
+			}
+			
+		}
+		
+	}
+	
+	public void getInformation(int[][] gameMatrix) {
 		
 	}
 
