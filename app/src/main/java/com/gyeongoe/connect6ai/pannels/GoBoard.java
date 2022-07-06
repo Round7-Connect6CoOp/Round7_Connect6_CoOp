@@ -122,7 +122,6 @@ public class GoBoard extends JPanel {
 				        						}
 					        					blackTurnFirst = true;
 					        				}
-					        				
 					        				firstClick =true;
 					        				gameMatrix[i][j] = 1;
 					        			}
@@ -142,10 +141,9 @@ public class GoBoard extends JPanel {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
 						        						newData.getInformation(gameMatrix);
-//						        						whiteTurnFirst=false;
+						        						whiteTurnFirst=false;
 						        						blackTurnFirst = true;
 						        						for(int k = 0; k < 2; k++) {
-						        							
 						        							int p = (int) (Math.random() * 19);
 							        						int q = (int) (Math.random() * 19);
 							        						MyData data = new MyData(p, q, Color.BLACK);
@@ -237,7 +235,7 @@ public class GoBoard extends JPanel {
 				        			if(ellipse[i][j].contains(e.getPoint())) {
 				        				
 				        				gameMatrix[i][j] = 3;
-				        				MyData.influnceMatrix[i][j] = 100;
+				        				MyData.influnceMatrix[j][i] = 100; //Change x,y coordinates
 				        				usedEllipse[i][j] = new Ellipse2D.Double(i*30+20, j*30+20,20, 20);
 				        				MyData newData = new MyData(i, j, currentColor);
 				        				
@@ -248,17 +246,23 @@ public class GoBoard extends JPanel {
 				        			}
 			        			}
 			        		}
-			        		System.out.print(MyData.influnceMatrix[i][j] + " | ");
+//			        		System.out.print(MyData.influnceMatrix[i][j] + " | ");
 			        	}
-			        	System.out.println("");
+//			        	System.out.println("");
 			        }
-					System.out.println(" ");
+//					System.out.println(" ");
 				}
 				else {
 					System.out.println("Press start");
 				}
-				
+				for(int i=0; i<=18; i++) { //print MyData.influnceMatrix[i][j] Output
+		        	for(int j=0; j<=18; j++) {
+		        		System.out.print(MyData.influnceMatrix[i][j] + " | ");
+		        	}
+		        	System.out.println();
+				}
 			}
+			
 
 			@Override
 			public void mousePressed(MouseEvent e) {
