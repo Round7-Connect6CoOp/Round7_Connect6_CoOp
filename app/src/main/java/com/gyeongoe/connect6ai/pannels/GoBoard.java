@@ -26,6 +26,7 @@ public class GoBoard extends JPanel {
 	Ellipse2D.Double[][] usedEllipse = new Ellipse2D.Double[20][20];
 	
 	private int[][] gameMatrix = new int[19][19];
+	private int[][] infoMatrix = new int[19][19];
 	Color currentColor = Color.RED;
 	
 	private boolean firstClick = false;
@@ -57,12 +58,20 @@ public class GoBoard extends JPanel {
 		}
 		
 		MyData.pointsTree.put(setHashKey(9, 9), 0);
-		while(MyData.pointsTree.size() < 343) {
+		while(MyData.pointsTree.size() < 361) {
 			int tempX = (int) (Math.random()*19);
 			int tempY = (int) (Math.random()*19);
+			
 			if(MyData.pointsTree.containsKey(setHashKey(tempX, tempY))) continue;
+			infoMatrix[tempX][tempY] = setHashKey(tempX, tempY);
 			MyData.pointsTree.put(setHashKey(tempX, tempY), 0);
-			System.out.println(setHashKey(tempX, tempY));
+		}
+		
+		for(int i=0; i<=18; i++) {
+        	for(int j=0; j<=18; j++) {
+        		System.out.print(infoMatrix[i][j]+" | ");
+        	}
+        	System.out.println();
 		}
 		
 		
@@ -617,14 +626,14 @@ public class GoBoard extends JPanel {
 	}
 	
 	public int setHashKey(int x, int y ) {
-		return 18*x+y;
+		return 19*x+y;
 	}
 	
 	public int getXFromHashKry(int key) {
-		return key/18;
+		return key/19;
 	}
 	
 	public int getYFromHashKry(int key) {
-		return key%18;
+		return key%19;
 	}
 }

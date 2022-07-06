@@ -20,6 +20,9 @@ public class MyData {
 	public static TreeMap<Integer,Integer> pointsTree = new TreeMap<Integer,Integer>();
 	
 	public static int count = 0;
+	private int[][] info = new int[3][6];
+	private int[][]  point= new int[3][6];
+
 	
 	public MyData(int x, int y, Color color) {
 		this.x = x;
@@ -38,7 +41,22 @@ public class MyData {
 		else {
 			pointsTree.put(key, 0);
 		}
-		
+		for(int i=0; i<3; i++) {
+			for(int j=0; j<6; j++) {
+				if(i==0) {
+					info[i][j] = point[x-j][y-j];
+				}
+				else if(i==1) {
+					info[i][j] = point[x][y-j];
+				}
+				else if(i==2) {
+					info[i][j] = point[x+j][y-j];
+				}
+				else if(i==3) {
+					info[i][j] = point[x+j][y];
+				}
+			}
+		}
 		
 	}
 
