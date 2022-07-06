@@ -1,9 +1,13 @@
 package com.gyeongoe.connect6ai.pannels;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
@@ -18,8 +22,10 @@ public class ControlPanel extends JPanel {
 	private RoundButton startButton = new RoundButton("Start", Color.GRAY);
 	private RoundButton reDoButton = new RoundButton("Undo");
 	private RoundButton restartButton = new RoundButton("New Game");
-	private RoundButton firstButton = new RoundButton("Fir", Color.GRAY);
-	private RoundButton secondButton = new RoundButton("Sec", Color.GRAY);
+	private JToggleButton firstButton = new JToggleButton("Fir");
+	private JToggleButton secondButton = new JToggleButton("Sec");
+	private ButtonGroup group;
+	private Container container;
 	private Boolean firstCheck = false;
 	private Boolean secondCheck = false;
 	
@@ -63,40 +69,49 @@ public class ControlPanel extends JPanel {
 		startButton.setBounds(15, 220, 210, 50);
 		
 		firstButton.setFont(normalFont);
-		firstButton.setBounds(15, 285, 100, 50);
-		firstButton.addActionListener(listener);
+		firstButton.setBackground(Color.GRAY);
+		firstButton.setForeground(Color.BLACK);
+		firstButton.addItemListener(new ItemListener(){
+	          @Override
+	          public void itemStateChanged(ItemEvent e) {
+	              if(e.getStateChange()==ItemEvent.SELECTED) {
+	            	secondButton.setForeground(Color.BLACK);
+	            	firstButton.setForeground(new Color(61,205,91));
+	  				firstCheck = true;
+	  				secondCheck = false; 
+	              }              
+	          }
+	      });
 		
 		secondButton.setFont(normalFont);
-		secondButton.setBounds(120, 285, 100, 50);
-		secondButton.addActionListener(listener);
+		secondButton.setBackground(Color.GRAY);
+		secondButton.setForeground(Color.BLACK);
+		secondButton.addItemListener(new ItemListener(){
+	          @Override
+	          public void itemStateChanged(ItemEvent e) {
+	              if(e.getStateChange()==ItemEvent.SELECTED) {
+	  				firstButton.setForeground(Color.BLACK);
+	            	secondButton.setForeground(new Color(61,205,91));
+	  				firstCheck = false;
+	  				secondCheck = true;  
+	              }              
+	          }
+	      });
 		
+		group = new ButtonGroup();
+	    container = new Container();
+		group.add(firstButton);
+		group.add(secondButton);
+	    container.add(firstButton);
+	    container.add(secondButton);
+	    container.setBounds(15, 285, 210, 50);
+	    container.setLayout(new FlowLayout());
+	    this.add(container);
 		this.add(restartButton);
 		this.add(reDoButton);
 		this.add(startButton);
-		this.add(firstButton);
-		this.add(secondButton);
 		this.add(numberOfDisabledPointTextField);
 	}
-	
-	ActionListener listener = new ActionListener() {
-		@Override
-        public void actionPerformed(ActionEvent e) {
-			String input = e.getActionCommand();
-			if(input.equals("Sec")) {
-				firstCheck = true;
-				firstButton.setColor("Fir", new Color(61,205,91));
-				secondCheck = false; 
-				secondButton.setColor("Sec", Color.GRAY);
-			}
-			
-			else if(input.equals("Sec")) {
-				secondCheck = true;  
-				secondButton.setColor("Sec", new Color(61,205,91));
-				firstCheck = false;
-				firstButton.setColor("Fir", Color.GRAY);
-			}
-	    }
-	};
 	
 	public int getNumberOfDisabledPoint() {
 		return numberOfDisabledPoint;
@@ -138,20 +153,20 @@ public class ControlPanel extends JPanel {
 		this.numberOfDisabledPointTextField = numberOfDisabledPointTextField;
 	}
 	
-	public RoundButton getFirstButton() {
+	public JToggleButton getFirstButton() {
 		return firstButton;
 	}
 
-	public void setgetFirstButton(RoundButton firstButton) {
+	public void setgetFirstButton(JToggleButton firstButton) {
 		this.firstButton = firstButton;
 	}
 	
 	
-	public RoundButton getSecondButton() {
+	public JToggleButton getSecondButton() {
 		return secondButton;
 	}
 
-	public void setSecondButton(RoundButton secondButton) {
+	public void setSecondButton(JToggleButton secondButton) {
 		this.secondButton = secondButton;
 	}
 
