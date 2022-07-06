@@ -10,6 +10,8 @@ public class MyData {
 	private int y;
 	private Color color;
 	
+	public static int[][] influnceMatrix = new int[19][19];
+	
 	public static ArrayList<MyData> clickedPoint = new ArrayList<MyData>();
 	
 	public static HashMap<Point, Integer> lineInformation = new HashMap<Point, Integer>();
@@ -23,8 +25,8 @@ public class MyData {
 	//Hash function for 6 items: When black won: 5461; When white won: 10922
 	
 	public static int count = 0;
-	private int[][] info = new int[4][11];
-	private int[][] vectorKey = new int[4][11];
+	private int[][] info = new int[4][11]; // each elements color information
+	private int[][] vectorKey = new int[4][11]; // each elements vector info
 	
 	public MyData(int x, int y, Color color) {
 		this.x = x;
@@ -59,20 +61,23 @@ public class MyData {
 			
 		}
 		
+	}
+	
+	public void getInformation(int[][] gameMatrix) {
 		for(int i=0; i<4; i++) {
 			try {
 				for(int j=0; j<11; j++) {
 					if(i==0) { // horizontal
-						System.out.println("Horizontal line : "+ info[i][j]); 
+						info[i][j] = gameMatrix[x][y-5+j];
 					}
 					else if(i==1) { //vertical
-						System.out.println("Vertical line : "+ info[i][j]); 
+						info[i][j] = gameMatrix[x-5+j][y];
 					}
 					else if(i==2) { // Left-Right
-						System.out.println("Left-Right line : "+ info[i][j]); 
+						info[i][j] = gameMatrix[x-5+j][y-5+j];
 					}
 					else if(i==3) { // Right-Left
-						System.out.println("Right-Left line : "+ info[i][j]); 
+						info[i][j] = gameMatrix[x+5-j][y-5+j];
 					}
 				}
 			} catch(Exception e) {
@@ -80,12 +85,9 @@ public class MyData {
 			}
 			
 		}
-		
 	}
 	
-	public void getInformation(int[][] gameMatrix) {
-		
-	}
+	
 
 	public int getX() {
 		return x;

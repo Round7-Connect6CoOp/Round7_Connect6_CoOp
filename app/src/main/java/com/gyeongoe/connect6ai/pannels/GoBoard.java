@@ -102,7 +102,13 @@ public class GoBoard extends JPanel {
 					        				currentColor = Color.BLACK;
 					        				MyData newData = new MyData(i, j, currentColor);
 					        				MyData.clickedPoint.add(newData);
-					        				System.out.println("firstClick " + currentColor);
+					        				MyData.influnceMatrix[i][j] = -10;
+				        					for(int a = 0; a < 11; a++) {
+				        						MyData.influnceMatrix[i][j-5+a] +=1;
+				        						MyData.influnceMatrix[i-5+a][j] +=1;
+				        						MyData.influnceMatrix[i-5+a][j-5+a] +=1;
+				        						MyData.influnceMatrix[i+5-a][j-5+a] +=1;
+				        					}
 					        				currentColor = Color.WHITE;
 					        				if(areWeFirst) {
 					        					whiteTurnFirst = true;
@@ -128,6 +134,11 @@ public class GoBoard extends JPanel {
 						        					y = j;
 						        					gameMatrix[i][j] = 2;
 						        					currentColor = Color.WHITE;
+						        					//START POINT: working on influnce Matrix!
+						        					MyData.influnceMatrix[i][j] = -10;
+						        					for(int a = 0; a < 4; a++) {
+						        						
+						        					}
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
@@ -160,7 +171,7 @@ public class GoBoard extends JPanel {
 					        					if(blackTurnSecond) {
 					        						MyData newData = new MyData(i, j, currentColor);
 					        						MyData.clickedPoint.add(newData);
-					        						
+					        						newData.getInformation(gameMatrix);
 					        						blackTurnSecond = false;
 					        						for(int k = 0; k < 2; k++) {
 					        							int p = (int) (Math.random() * 19);
@@ -174,6 +185,7 @@ public class GoBoard extends JPanel {
 					        						
 					        						MyData newData = new MyData(i, j, currentColor);
 					        						MyData.clickedPoint.add(newData);
+					        						newData.getInformation(gameMatrix);
 					        						blackTurnSecond = true;
 					        						whiteTurnSecond = false;
 					        					}
@@ -228,9 +240,8 @@ public class GoBoard extends JPanel {
 				        			if(ellipse[i][j].contains(e.getPoint())) {
 				        				
 				        				gameMatrix[i][j] = 3;
-				        				
+				        				MyData.influnceMatrix[i][j] = 100;
 				        				usedEllipse[i][j] = new Ellipse2D.Double(i*30+20, j*30+20,20, 20);
-					        			System.out.println(i+ " " + j);
 				        				MyData newData = new MyData(i, j, currentColor);
 				        				
 				        				MyData.clickedPoint.add(newData);
@@ -240,6 +251,7 @@ public class GoBoard extends JPanel {
 				        			}
 			        			}
 			        		}
+			        		System.out.print(MyData.influnceMatrix[i][j] + " | ");
 			        	}
 			        	System.out.println("");
 			        }
@@ -247,6 +259,7 @@ public class GoBoard extends JPanel {
 				else {
 					System.out.println("Press start");
 				}
+				
 			}
 
 			@Override

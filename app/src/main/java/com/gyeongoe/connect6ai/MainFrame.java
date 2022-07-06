@@ -53,6 +53,8 @@ public class MainFrame extends JFrame {
 	private void createFrame() {
 		goBoard = new GoBoard();
 		controlPanel = new ControlPanel();
+		
+		
 
 		controlPanel.setBackground(Color.ORANGE);
 		controlPanel.getStartButton().addActionListener(new ActionListener() {
@@ -66,6 +68,12 @@ public class MainFrame extends JFrame {
 				}
 				goBoard.setStart(true);
 				goBoard.setBlockNumber(controlPanel.getNumberOfDisabledPoint());
+				for(int i = 0; i < 19; i++) {
+					for(int j = 0; j < 19; j++) {
+						MyData.influnceMatrix[i][j] = 0;
+					}
+				}
+				
 			}
 			
 		});
