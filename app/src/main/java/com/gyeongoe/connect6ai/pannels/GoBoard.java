@@ -57,11 +57,12 @@ public class GoBoard extends JPanel {
 		}
 		
 		MyData.pointsTree.put(setHashKey(9, 9), 0);
-		while(MyData.pointsTree.size() <= 361) {
+		while(MyData.pointsTree.size() < 343) {
 			int tempX = (int) (Math.random()*19);
 			int tempY = (int) (Math.random()*19);
 			if(MyData.pointsTree.containsKey(setHashKey(tempX, tempY))) continue;
 			MyData.pointsTree.put(setHashKey(tempX, tempY), 0);
+			System.out.println(setHashKey(tempX, tempY));
 		}
 		
 		

@@ -25,7 +25,7 @@ public class MyData {
 		this.x = x;
 		this.y = y;
 		this.color = color;
-		int key = 19*x + y;
+		int key = 18*x + y;
 		if(color.equals(Color.RED)) {
 			pointsTree.put(key, 3);
 		}
