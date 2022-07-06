@@ -26,6 +26,7 @@ public class GoBoard extends JPanel {
 	Ellipse2D.Double[][] usedEllipse = new Ellipse2D.Double[20][20];
 	
 	private int[][] gameMatrix = new int[19][19];
+	private int[][] infoMatrix = new int[19][19];
 	Color currentColor = Color.RED;
 	
 	private boolean firstClick = false;
@@ -56,13 +57,22 @@ public class GoBoard extends JPanel {
         	}
 		}
 		
-		MyData.pointsTree.put(setHashKey(9, 9), 0);
-		while(MyData.pointsTree.size() < 343) {
+		infoMatrix[9][9] = setHashKey(9, 9);
+		MyData.pointsTree.put(setHashKey(9, 9), null);
+		while(MyData.pointsTree.size() < 361) {
 			int tempX = (int) (Math.random()*19);
 			int tempY = (int) (Math.random()*19);
+			
 			if(MyData.pointsTree.containsKey(setHashKey(tempX, tempY))) continue;
-			MyData.pointsTree.put(setHashKey(tempX, tempY), 0);
-			System.out.println(setHashKey(tempX, tempY));
+			infoMatrix[tempX][tempY] = setHashKey(tempX, tempY);
+			MyData.pointsTree.put(setHashKey(tempX, tempY), null);
+		}
+		
+		for(int i=0; i<=18; i++) {
+        	for(int j=0; j<=18; j++) {
+        		System.out.print(infoMatrix[i][j]+" | ");
+        	}
+        	System.out.println();
 		}
 		
 		
@@ -87,12 +97,18 @@ public class GoBoard extends JPanel {
 				        					e1.printStackTrace();
 				        				}
 				        				
-					        			System.out.println(i+ " " + j);
 					        			if(!firstClick) {
 					        				currentColor = Color.BLACK;
 					        				MyData newData = new MyData(i, j, currentColor);
 					        				MyData.clickedPoint.add(newData);
-					        				System.out.println("firstClick " + currentColor);
+					        				MyData.influnceMatrix[i][j] = 10;
+				        					for(int a = 0; a < 11; a++) {
+				        						if(a==5) continue;
+				        						MyData.influnceMatrix[i][j-5+a] +=1;
+				        						MyData.influnceMatrix[i-5+a][j] +=1;
+				        						MyData.influnceMatrix[i-5+a][j-5+a] +=1;
+				        						MyData.influnceMatrix[i+5-a][j-5+a] +=1;
+				        					}
 					        				currentColor = Color.WHITE;
 					        				if(areWeFirst) {
 					        					whiteTurnFirst = true;
@@ -101,7 +117,6 @@ public class GoBoard extends JPanel {
 					        					for(int k = 0; k < 2; k++) {
 				        							int p = (int) (Math.random() * 19);
 					        						int q = (int) (Math.random() * 19);
-					        						System.out.println("x: " + x + " y: " + y);
 					        						MyData data = new MyData(p, q, Color.WHITE);
 					        						MyData.clickedPoint.add(data);
 				        						}
@@ -118,15 +133,21 @@ public class GoBoard extends JPanel {
 						        					y = j;
 						        					gameMatrix[i][j] = 2;
 						        					currentColor = Color.WHITE;
+						        					//START POINT: working on influnce Matrix!
+//						        					MyData.influnceMatrix[i][j] = -10;
+//						        					for(int a = 0; a < 4; a++) {
+//						        						
+//						        					}
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
+						        						newData.getInformation(gameMatrix);
 //						        						whiteTurnFirst=false;
 						        						blackTurnFirst = true;
 						        						for(int k = 0; k < 2; k++) {
+						        							
 						        							int p = (int) (Math.random() * 19);
 							        						int q = (int) (Math.random() * 19);
-							        						System.out.println("x: " + x + " y: " + y);
 							        						MyData data = new MyData(p, q, Color.BLACK);
 							        						MyData.clickedPoint.add(data);
 							        						whiteTurnSecond = false;
@@ -135,6 +156,7 @@ public class GoBoard extends JPanel {
 						        					else {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
+						        						newData.getInformation(gameMatrix);
 						        						whiteTurnSecond = true;
 						        					}
 						        				}
@@ -147,7 +169,7 @@ public class GoBoard extends JPanel {
 					        					if(blackTurnSecond) {
 					        						MyData newData = new MyData(i, j, currentColor);
 					        						MyData.clickedPoint.add(newData);
-					        						
+					        						newData.getInformation(gameMatrix);
 					        						blackTurnSecond = false;
 					        						for(int k = 0; k < 2; k++) {
 					        							int p = (int) (Math.random() * 19);
@@ -161,6 +183,7 @@ public class GoBoard extends JPanel {
 					        						
 					        						MyData newData = new MyData(i, j, currentColor);
 					        						MyData.clickedPoint.add(newData);
+					        						newData.getInformation(gameMatrix);
 					        						blackTurnSecond = true;
 					        						whiteTurnSecond = false;
 					        					}
@@ -202,7 +225,6 @@ public class GoBoard extends JPanel {
 					        		}
 				        		}
 				        		else {
-				        			System.out.println("Already Taken");
 				        		}
 			        		}
 			        		else {
@@ -215,9 +237,8 @@ public class GoBoard extends JPanel {
 				        			if(ellipse[i][j].contains(e.getPoint())) {
 				        				
 				        				gameMatrix[i][j] = 3;
-				        				
+				        				MyData.influnceMatrix[i][j] = 100;
 				        				usedEllipse[i][j] = new Ellipse2D.Double(i*30+20, j*30+20,20, 20);
-					        			System.out.println(i+ " " + j);
 				        				MyData newData = new MyData(i, j, currentColor);
 				        				
 				        				MyData.clickedPoint.add(newData);
@@ -227,13 +248,16 @@ public class GoBoard extends JPanel {
 				        			}
 			        			}
 			        		}
+			        		System.out.print(MyData.influnceMatrix[i][j] + " | ");
 			        	}
 			        	System.out.println("");
 			        }
+					System.out.println(" ");
 				}
 				else {
 					System.out.println("Press start");
 				}
+				
 			}
 
 			@Override
@@ -617,14 +641,14 @@ public class GoBoard extends JPanel {
 	}
 	
 	public int setHashKey(int x, int y ) {
-		return 18*x+y;
+		return 19*x+y;
 	}
 	
-	public int getXFromHashKry(int key) {
-		return key/18;
+	public int getXFromHashKey(int key) {
+		return key/19;
 	}
 	
-	public int getYFromHashKry(int key) {
-		return key%18;
+	public int getYFromHashKey(int key) {
+		return key%19;
 	}
 }
