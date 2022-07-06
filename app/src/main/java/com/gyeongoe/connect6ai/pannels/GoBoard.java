@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
@@ -89,7 +90,7 @@ public class GoBoard extends JPanel {
 				        							int p = (int) (Math.random() * 19);
 					        						int q = (int) (Math.random() * 19);
 					        						System.out.println("x: " + x + " y: " + y);
-					        						MyData data = new MyData(p, q, Color.BLUE);
+					        						MyData data = new MyData(p, q, Color.WHITE);
 					        						MyData.clickedPoint.add(data);
 				        						}
 					        					blackTurnFirst = true;
@@ -114,7 +115,7 @@ public class GoBoard extends JPanel {
 						        							int p = (int) (Math.random() * 19);
 							        						int q = (int) (Math.random() * 19);
 							        						System.out.println("x: " + x + " y: " + y);
-							        						MyData data = new MyData(p, q, Color.BLUE);
+							        						MyData data = new MyData(p, q, Color.BLACK);
 							        						MyData.clickedPoint.add(data);
 							        						whiteTurnSecond = false;
 						        						}
@@ -139,7 +140,7 @@ public class GoBoard extends JPanel {
 					        						for(int k = 0; k < 2; k++) {
 					        							int p = (int) (Math.random() * 19);
 						        						int q = (int) (Math.random() * 19);
-						        						MyData data = new MyData(p, q, Color.BLUE);
+						        						MyData data = new MyData(p, q, Color.WHITE);
 						        						MyData.clickedPoint.add(data);
 					        						}
 					        						
@@ -214,8 +215,8 @@ public class GoBoard extends JPanel {
 				        			}
 			        			}
 			        		}
-			        		
 			        	}
+			        	System.out.println("");
 			        }
 				}
 				else {
