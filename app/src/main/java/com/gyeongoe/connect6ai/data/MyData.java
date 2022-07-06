@@ -13,49 +13,48 @@ public class MyData {
 	public static ArrayList<MyData> clickedPoint = new ArrayList<MyData>();
 	
 	public static HashMap<Point, Integer> lineInformation = new HashMap<Point, Integer>();
-//	public static PriorityQueue< HashMap<Integer, Integer>> maxHeap = new PriorityQueue< HashMap<Integer, Integer>>((Collection<? extends HashMap<Integer, Integer>>) Comparator.reverseOrder());
-
 	
+	// This heap wiill be used for deciding where to set the stone (It's a max heap!)
+	public static PriorityQueue<Integer> maxHeap = new PriorityQueue< Integer>(Comparator.reverseOrder());
+
 	//Hash function 19*x + y
-	public static TreeMap<Integer,Integer> pointsTree = new TreeMap<Integer,Integer>();
+	public static TreeMap<Integer,MyData> pointsTree = new TreeMap<Integer,MyData>();
+	
+	//Hash function for 6 items: When black won: 5592405; When white won: 11184810
 	
 	public static int count = 0;
-	private int[][] info = new int[3][6];
-	private int[][]  point= new int[3][6];
-
+	private int[][] info = new int[4][11];
 	
 	public MyData(int x, int y, Color color) {
 		this.x = x;
 		this.y = y;
 		this.color = color;
-		int key = 18*x + y;
-		if(color.equals(Color.RED)) {
-			pointsTree.put(key, 3);
-		}
-		else if(color.equals(Color.BLACK)) {
-			pointsTree.put(key, 1);
-		}
-		else if(color.equals(Color.WHITE)) {
-			pointsTree.put(key, 2);
-		}
-		else {
-			pointsTree.put(key, 0);
-		}
-		for(int i=0; i<3; i++) {
-			for(int j=0; j<6; j++) {
-				if(i==0) {
-					info[i][j] = point[x-j][y-j];
+		
+		// Horizontal 0, Vertical 1, Left-Right Diagonal 2, Right-Left Diagonal 3
+		for(int i=0; i<4; i++) {
+			info[i][5] = setHashKey(x,y);
+			try {
+				for(int j=0; j<11; j++) {
+					if(j == 5) {
+						continue;
+					}
+					if(i==0) { // horizontal
+						info[i][j] = setHashKey(x-5+j,y);
+					}
+					else if(i==1) { //vertical
+						info[i][j] = setHashKey(x,y-5+j);
+					}
+					else if(i==2) { // Left-Right
+						info[i][j] = setHashKey(x-5+j,y-5+j);
+					}
+					else if(i==3) { // Right-Left
+						info[i][j] = setHashKey(x+5-j,y-5+j);
+					}
 				}
-				else if(i==1) {
-					info[i][j] = point[x][y-j];
-				}
-				else if(i==2) {
-					info[i][j] = point[x+j][y-j];
-				}
-				else if(i==3) {
-					info[i][j] = point[x+j][y];
-				}
+			} catch(Exception e) {
+				
 			}
+			
 		}
 		
 	}
@@ -82,6 +81,18 @@ public class MyData {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+	
+	public int setHashKey(int x, int y ) {
+		return 19*x+y;
+	}
+	
+	public int getXFromHashKey(int key) {
+		return key/19;
+	}
+	
+	public int getYFromHashKey(int key) {
+		return key%19;
 	}
 	
 }

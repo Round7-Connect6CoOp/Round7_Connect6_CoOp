@@ -57,14 +57,14 @@ public class GoBoard extends JPanel {
         	}
 		}
 		
-		MyData.pointsTree.put(setHashKey(9, 9), 0);
+		MyData.pointsTree.put(setHashKey(9, 9), null);
 		while(MyData.pointsTree.size() < 361) {
 			int tempX = (int) (Math.random()*19);
 			int tempY = (int) (Math.random()*19);
 			
 			if(MyData.pointsTree.containsKey(setHashKey(tempX, tempY))) continue;
 			infoMatrix[tempX][tempY] = setHashKey(tempX, tempY);
-			MyData.pointsTree.put(setHashKey(tempX, tempY), 0);
+			MyData.pointsTree.put(setHashKey(tempX, tempY), null);
 		}
 		
 		for(int i=0; i<=18; i++) {
@@ -629,11 +629,11 @@ public class GoBoard extends JPanel {
 		return 19*x+y;
 	}
 	
-	public int getXFromHashKry(int key) {
+	public int getXFromHashKey(int key) {
 		return key/19;
 	}
 	
-	public int getYFromHashKry(int key) {
+	public int getYFromHashKey(int key) {
 		return key%19;
 	}
 }
