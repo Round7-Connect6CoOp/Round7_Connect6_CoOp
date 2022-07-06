@@ -235,7 +235,7 @@ public class GoBoard extends JPanel {
 				        			if(ellipse[i][j].contains(e.getPoint())) {
 				        				
 				        				gameMatrix[i][j] = 3;
-				        				MyData.influnceMatrix[j][i] = 100; //Change x,y coordinates
+				        				MyData.influnceMatrix[i][j] = 100;
 				        				usedEllipse[i][j] = new Ellipse2D.Double(i*30+20, j*30+20,20, 20);
 				        				MyData newData = new MyData(i, j, currentColor);
 				        				
