@@ -15,7 +15,9 @@ public class MyData {
 	public static HashMap<Point, Integer> lineInformation = new HashMap<Point, Integer>();
 //	public static PriorityQueue< HashMap<Integer, Integer>> maxHeap = new PriorityQueue< HashMap<Integer, Integer>>((Collection<? extends HashMap<Integer, Integer>>) Comparator.reverseOrder());
 
-	TreeMap<Integer,HashMap<Point, Integer>> pointsTree = new TreeMap<Integer,HashMap<Point, Integer>>();
+	
+	//Hash function 19*x + y
+	public static TreeMap<Integer,Integer> pointsTree = new TreeMap<Integer,Integer>();
 	
 	public static int count = 0;
 	
@@ -23,15 +25,18 @@ public class MyData {
 		this.x = x;
 		this.y = y;
 		this.color = color;
+		int key = 19*x + y;
 		if(color.equals(Color.RED)) {
-			
-			lineInformation.put(, 3);
+			pointsTree.put(key, 3);
 		}
 		else if(color.equals(Color.BLACK)) {
+			pointsTree.put(key, 1);
 		}
 		else if(color.equals(Color.WHITE)) {
+			pointsTree.put(key, 2);
 		}
 		else {
+			pointsTree.put(key, 0);
 		}
 		
 		

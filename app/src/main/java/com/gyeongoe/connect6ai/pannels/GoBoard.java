@@ -47,10 +47,16 @@ public class GoBoard extends JPanel {
 	private int y = -1;
 	
 	public GoBoard(){
+		MyData.pointsTree.put(19*9+9, null);
 		setBounds(5, 5, 600, 600);
 		setBackground(new Color(220, 179, 92));
 		for(int i=0; i<=18; i++) {
         	for(int j=0; j<=18; j++) {
+        		gameMatrix[i][j] = 0;
+        	}
+		}
+		for(int i=9; i<=18; i++) {
+        	for(int j=9; j<=18; j++) {
         		gameMatrix[i][j] = 0;
         	}
 		}
