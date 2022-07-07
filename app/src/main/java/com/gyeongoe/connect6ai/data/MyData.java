@@ -22,6 +22,9 @@ public class MyData {
 	//Hash function 19*x + y
 	public static TreeMap<Integer,MyData> pointsTree = new TreeMap<Integer,MyData>();
 	
+	public static Stack<Integer> newestWhite = new Stack<Integer>();
+	public static Stack<Integer> newestBlack = new Stack<Integer>();
+	
 	//Hash function for 6 items: When black won: 5461; When white won: 10922
 	
 	public static int count = 0;
@@ -123,6 +126,22 @@ public class MyData {
 	
 	public int getYFromHashKey(int key) {
 		return key%19;
+	}
+
+	public int[][] getInfo() {
+		return info;
+	}
+
+	public void setInfo(int[][] info) {
+		this.info = info;
+	}
+
+	public int[][] getVectorKey() {
+		return vectorKey;
+	}
+
+	public void setVectorKey(int[][] vectorKey) {
+		this.vectorKey = vectorKey;
 	}
 	
 }
