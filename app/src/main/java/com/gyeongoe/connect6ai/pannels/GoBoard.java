@@ -133,10 +133,21 @@ public class GoBoard extends JPanel {
 						        					gameMatrix[i][j] = 2;
 						        					currentColor = Color.WHITE;
 						        					//START POINT: working on influnce Matrix!
-//						        					MyData.influnceMatrix[i][j] = -10;
-//						        					for(int a = 0; a < 4; a++) {
-//						        						
-//						        					}
+						        					MyData.influnceMatrix[i][j] = -10;
+						        					for(int a = 0; a < 11; a++) {
+						        						if(a==5) continue;
+						        						if(!MyData.influnceMatrix[i][j-5+a].equals(100) && !MyData.influnceMatrix[i][j-5+a].equals(10) && !MyData.influnceMatrix[i][j-5+a].equals(-10){
+						        							MyData.influnceMatrix[i][j-5+a] +=-1;
+						        						}
+						        						else if(!MyData.influnceMatrix[i][j-5+a].equals(100) && !MyData.influnceMatrix[i][j-5+a].equals(10) && !MyData.influnceMatrix[i][j-5+a].equals(-10){
+						        							MyData.influnceMatrix[i][j-5+a] +=-1;
+						        						}	
+						        								
+						        								
+						        						MyData.influnceMatrix[i-5+a][j] +=-1;
+						        						MyData.influnceMatrix[i-5+a][j-5+a] +=-1;
+						        						MyData.influnceMatrix[i+5-a][j-5+a] +=-1;
+						        					}
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
@@ -233,7 +244,8 @@ public class GoBoard extends JPanel {
 		        				}
 			        			if(usedEllipse[i][j] == null || !usedEllipse[i][j].contains(e.getPoint())) {
 				        			if(ellipse[i][j].contains(e.getPoint())) {
-				        				
+
+				        				System.out.println(i+" "+j);
 				        				gameMatrix[i][j] = 3;
 				        				MyData.influnceMatrix[i][j] = 100;
 				        				usedEllipse[i][j] = new Ellipse2D.Double(i*30+20, j*30+20,20, 20);
@@ -246,18 +258,15 @@ public class GoBoard extends JPanel {
 				        			}
 			        			}
 			        		}
-//			        		System.out.print(MyData.influnceMatrix[i][j] + " | ");
 			        	}
-//			        	System.out.println("");
 			        }
-//					System.out.println(" ");
 				}
 				else {
 					System.out.println("Press start");
 				}
 				for(int i=0; i<=18; i++) { //print MyData.influnceMatrix[i][j] Output
 		        	for(int j=0; j<=18; j++) {
-		        		System.out.print(MyData.influnceMatrix[i][j] + " | ");
+		        		System.out.print(MyData.influnceMatrix[j][i] + " | ");
 		        	}
 		        	System.out.println();
 				}
