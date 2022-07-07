@@ -139,39 +139,121 @@ public class GoBoard extends JPanel {
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -10;
 						        					MyData.newestWhite.push(setHashKey(i,j));
-						        					boolean checkLeft = false;
-						        					boolean checkRight = false;
+						        					
+						        					boolean isItOnLeft = false;
+						        					boolean isItOnRight = false;
+						        					boolean isItOnTop = false;
+						        					boolean isItOnBottom = false;
+						        					boolean isItOnLeftTop = false;
+						        					boolean isItOnRightBottom = false;
+						        					boolean isItOnRightTop = false;
+						        					boolean isItOnLeftBottom = false;
 						        					int distance = 0;
-						        					for(int n = 0; n<4; n++) {
+						        					for(int n = 0; n<8; n++) {
 						        						for(int a = 1; a<5;  a++) {
 						        							if(n==0) {
-						        								if(checkLeft == false) {
-						        									if(MyData.influnceMatrix[i][j-a]==10) {
-						        										distance = a;
-						        										checkLeft = true;
-							        								}
-						        									else {
-						        										MyData.influnceMatrix[i][j-a]+=-1;
-						        									}
+					        									if(MyData.influnceMatrix[i][j-a]==10) {
+					        										distance = a;
+					        										isItOnLeft = true;
+					        										break;
 						        								}
-						        								else if(checkRight = false) {
-						        									if(MyData.influnceMatrix[i][j+a]==10) {
-						        										distance = a;
-						        										checkRight = true;
-							        								}
-						        									else {
-						        										MyData.influnceMatrix[i][j+a]+=-1;
-						        									}
+					        									else if(MyData.influnceMatrix[i][j-a]==100) {
+					        										break;
 						        								}
+					        									else {
+					        										MyData.influnceMatrix[i][j-a] -= 1;
+					        									}
 						        							}
 						        							else if(n==1) {
-						        								
+						        								if(MyData.influnceMatrix[i][j+a]==10) {
+					        										distance = a;
+					        										isItOnRight = true;
+					        										break;
+						        								}
+					        									else if(MyData.influnceMatrix[i][j+a]==100) {
+					        										break;
+						        								}
+					        									else {
+					        										MyData.influnceMatrix[i][j+a]+=(-1);
+					        									}
 						        							}
 						        							else if(n==2) {
-						        								
+					        									if(MyData.influnceMatrix[i-a][j]==10) {
+					        										distance = a;
+					        										isItOnTop = true;
+					        										break;
+						        								}
+					        									else if(MyData.influnceMatrix[i-a][j]==100) {
+					        										break;
+						        								}
+					        									else {
+					        										MyData.influnceMatrix[i-a][j] -= 1;
+					        									}
 						        							}
 						        							else if(n==3) {
-						        								
+						        								if(MyData.influnceMatrix[i+a][j]==10) {
+					        										distance = a;
+					        										isItOnBottom = true;
+					        										break;
+						        								}
+					        									else if(MyData.influnceMatrix[i+a][j]==100) {
+					        										break;
+						        								}
+					        									else {
+					        										MyData.influnceMatrix[i+a][j]+=(-1);
+					        									}
+						        							}
+						        							if(n==4) {
+					        									if(MyData.influnceMatrix[i-a][j-a]==10) {
+					        										distance = a;
+					        										isItOnLeftTop = true;
+					        										break;
+						        								}
+					        									else if(MyData.influnceMatrix[i-a][j-a]==100) {
+					        										break;
+						        								}
+					        									else {
+					        										MyData.influnceMatrix[i-a][j-a] -= 1;
+					        									}
+						        							}
+						        							else if(n==5) {
+						        								if(MyData.influnceMatrix[i+a][j+a]==10) {
+					        										distance = a;
+					        										isItOnRightBottom = true;
+					        										break;
+						        								}
+					        									else if(MyData.influnceMatrix[i+a][j+a]==100) {
+					        										break;
+						        								}
+					        									else {
+					        										MyData.influnceMatrix[i+a][j+a]+=(-1);
+					        									}
+						        							}
+						        							else if(n==6) {
+					        									if(MyData.influnceMatrix[i+a][j-a]==10) {
+					        										distance = a;
+					        										isItOnRightTop = true;
+					        										break;
+						        								}
+					        									else if(MyData.influnceMatrix[i+a][j-a]==100) {
+					        										break;
+						        								}
+					        									else {
+					        										MyData.influnceMatrix[i+a][j-a] -= 1;
+					        									}
+						        							}
+						        							else if(n==7) {
+						        								if(MyData.influnceMatrix[i+a][j]==10) {
+					        										distance = a;
+					        										isItOnLeftBottom = true;
+					        										break;
+						        								}
+					        									else if(MyData.influnceMatrix[i+a][j]==100) {
+					        										break;
+						        								}
+					        									else {
+					        										MyData.influnceMatrix[i+a][j]+=(-1);
+					        									}
 						        							}
 						        						}
 						        						
