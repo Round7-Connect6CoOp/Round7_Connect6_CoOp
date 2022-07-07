@@ -12,8 +12,8 @@ public class GameLogic {
 	// Horizontal 0, Vertical 1, Left-Right Diagonal 2, Right-Left Diagonal 3
 	
 	
-	public static ArrayList<Integer> minArray = new ArrayList<Integer>();
-	public static ArrayList<Integer> maxArray = new ArrayList<Integer>();
+	public ArrayList<Integer> minArray = new ArrayList<Integer>();
+	public ArrayList<Integer> maxArray = new ArrayList<Integer>();
 	
 	public GameLogic(){
 		//1 - 우리말이 4개 이상인 곳 찾기 - 상대가 우리의 말을 막는데 3개이상의 돌이 필요한 경우 
@@ -31,10 +31,11 @@ public class GameLogic {
 			//가중치의 값이 같을 경우에는 같은 가중치를 가지는 모든 돌의 영향력을 계산 한 후에 두기 
 		
 		//돌은 두개를 두어야 함으로 모든 조건을 최소 두번씩은 확인해야
-		int count=0;
-		int blank=0; //현재 스틱의 카운트를 저장 - 이 카운트가 3이상이 되면 다음 스틱으로 넘어감 
+		int count = 0; //현재둔 바둑돌의 갯수 
+		int blank = 0; //현재 스틱의 카운트를 저장 - 이 카운트가 3이상이 되면 다음 스틱으로 넘어감 
 		int dollColor; //현재 돌의 색상을 저장 
-		int dollCount;//현재 같은 색상의 돌의 갯수를 카운트 
+		int dollCount = 0;//현재 같은 색상의 돌의 갯수를 카운트 
+		
 		while(count<=2) {
 			for() {//주어진 모든 돌들에 대해서 스틱 돌기
 				for(int i=0; i<4; i++) {
@@ -47,15 +48,16 @@ public class GameLogic {
 						
 						for(int j=0; j<6; j++) {//0~5
 							if(돌이다) {
-								if(/*돌의 색이 우리일 때*/dollColor == 우리돌 ){
+								if(/*돌의 색이 우리일 때*/dollColor == 우리돌의 색 ){
 									if(blank<=2 && dollCount == 4) {
 										//4이상인 곳에 돌 놓기 
+										//가중치가 가장 높은 곳에 놓기 
 									}
 									else {
 										dollCount++;
 									}
 								}	
-								else if(/*돌의 색이 상대일 때*/dollColor == 다른돌){
+								else if(/*돌의 색이 상대일 때*/dollColor != 우리돌의 색){
 									break;
 								}
 							}
@@ -66,7 +68,7 @@ public class GameLogic {
 						}
 						for(int j=6; j<11; j++) {//6~11
 							if(돌이다) {
-								if(/*돌의 색이 우리일 때*/dollColor == 우리){
+								if(/*돌의 색이 우리일 때*/dollColor == 우리돌 ){
 									if(blank<=2 && dollCount == 4) {
 										//4이상인 곳에 돌 놓기 
 									}
@@ -74,7 +76,7 @@ public class GameLogic {
 										dollCount++;
 									}
 								}	
-								else if(/*돌의 색이 상대일 때*/dollColor == 다른 돌){
+								else if(/*돌의 색이 상대일 때*/dollColor != 우리돌 )){
 									break;
 								}
 							}
@@ -99,7 +101,7 @@ public class GameLogic {
 										dollCount++;
 									}
 								}	
-								else if(/*돌의 색이 상대일 때*/dollColor == 우리돌 또는 착수돌 ){
+								else if(/*돌의 색이 상대일 때*/dollColor != 상대의 돌 ){
 									break;
 								}
 							}
@@ -122,7 +124,7 @@ public class GameLogic {
 										dollCount++;
 									}
 								}	
-								else if(/*돌의 색이 상대일 때*/dollColor == 우리돌 또는 착수돌 ){
+								else if(/*돌의 색이 상대일 때*/dollColor != 상대의 돌 ){
 									break;
 								}
 							}
@@ -132,7 +134,9 @@ public class GameLogic {
 							}
 						}
 					}
-					else if(/*우리의 말이 4 이상이 될 수 있는 경우*/) {//두개를 두어서 4개를 만들기 
+					else if(/*스틱 안의 값이 2또는 3) {//두개를 두어서 4개를 만들기 
+						//가중치가 가장 높은 돌이 돼 
+					}
 						
 					}
 					else if(/*상대를 막으면서 우리의 최선수 놓기*/) {
@@ -145,14 +149,45 @@ public class GameLogic {
 			}
 		}
 		
-		//가중치의 절댓값의 가장 작은 값을 리턴하는 메소드 
-		public ArrayList findMin(){
-			
+		public ArrayList<Integer> findMin() {
+			int min = 100;
+			for(int i=0; i<=18; i++) {
+	        	for(int j=0; j<=18; j++) {
+	        		if(0 > MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j]>= -8) {
+	        			if(min > Math.abs(MyData.influnceMatrix[i][j])) {
+	        				min = Math.abs(MyData.influnceMatrix[i][j]);
+	        			}
+	        		}
+	        	}
+	        }
+			for(int i=0; i<=18; i++) {
+				for(int j=0; j<=18; j++) {
+					if(0 > MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j]>= -8) {
+						if(min == Math.abs(MyData.influnceMatrix[i][j])) {
+							minArray.add(19*i+j);
+						}
+					}
+				}
+			}
+			return minArray;
 		}
 		
-		//가중치의 가장 큰 값을 리턴하는 메소드 
-		public ArrayList findMax(){
-			
+		ArrayList<Integer>  findMax() {
+			int max=0;
+			for(int i=0; i<=18; i++) {
+	        	for(int j=0; j<=18; j++) {
+	        		if(max < MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j] <= 8) {
+	        			max = MyData.influnceMatrix[i][j];
+	        		}
+	        	}
+	        }
+			for(int i=0; i<=18; i++) {
+				for(int j=0; j<=18; j++) {
+					if(max == MyData.influnceMatrix[i][j]) {
+						maxArray.add(19*i+j);
+					}
+				}
+			}
+			return maxArray;
 		}
-	}
 }
