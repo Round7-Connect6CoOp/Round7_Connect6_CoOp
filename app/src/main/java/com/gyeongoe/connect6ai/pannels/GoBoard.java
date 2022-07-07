@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -139,187 +140,8 @@ public class GoBoard extends JPanel {
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -10;
 						        					MyData.newestWhite.push(setHashKey(i,j));
+						        					checkMatrix(i, j);
 						        					
-						        					boolean isItOnLeft = false;
-						        					boolean isItOnRight = false;
-						        					boolean isItOnTop = false;
-						        					boolean isItOnBottom = false;
-						        					boolean isItOnLeftTop = false;
-						        					boolean isItOnRightBottom = false;
-						        					boolean isItOnRightTop = false;
-						        					boolean isItOnLeftBottom = false;
-						        					int[] distance = new int[8] ;
-						        					for(int n = 0; n<8; n++) {
-						        						for(int a = 1; a<5;  a++) {
-						        							if(n==0) {
-					        									if(MyData.influnceMatrix[i][j-a]==10) {
-					        										distance[n] = a;
-					        										isItOnLeft = true;
-					        										break;
-						        								}
-					        									else if(MyData.influnceMatrix[i][j-a]==100) {
-					        										break;
-						        								}
-					        									else {
-					        										MyData.influnceMatrix[i][j-a] -= 1;
-					        									}
-						        							}
-						        							else if(n==1) {
-						        								if(MyData.influnceMatrix[i][j+a]==10) {
-						        									distance[n] = a;
-					        										isItOnRight = true;
-					        										break;
-						        								}
-					        									else if(MyData.influnceMatrix[i][j+a]==100) {
-					        										break;
-						        								}
-					        									else {
-					        										MyData.influnceMatrix[i][j+a]+=(-1);
-					        									}
-						        							}
-						        							else if(n==2) {
-					        									if(MyData.influnceMatrix[i-a][j]==10) {
-					        										distance[n] = a;
-					        										isItOnTop = true;
-					        										break;
-						        								}
-					        									else if(MyData.influnceMatrix[i-a][j]==100) {
-					        										break;
-						        								}
-					        									else {
-					        										MyData.influnceMatrix[i-a][j] -= 1;
-					        									}
-						        							}
-						        							else if(n==3) {
-						        								if(MyData.influnceMatrix[i+a][j]==10) {
-						        									distance[n] = a;
-					        										isItOnBottom = true;
-					        										break;
-						        								}
-					        									else if(MyData.influnceMatrix[i+a][j]==100) {
-					        										break;
-						        								}
-					        									else {
-					        										MyData.influnceMatrix[i+a][j]+=(-1);
-					        									}
-						        							}
-						        							if(n==4) {
-					        									if(MyData.influnceMatrix[i-a][j-a]==10) {
-					        										distance[n] = a;
-					        										isItOnLeftTop = true;
-					        										break;
-						        								}
-					        									else if(MyData.influnceMatrix[i-a][j-a]==100) {
-					        										break;
-						        								}
-					        									else {
-					        										MyData.influnceMatrix[i-a][j-a] -= 1;
-					        									}
-						        							}
-						        							else if(n==5) {
-						        								if(MyData.influnceMatrix[i+a][j+a]==10) {
-						        									distance[n] = a;
-					        										isItOnRightBottom = true;
-					        										break;
-						        								}
-					        									else if(MyData.influnceMatrix[i+a][j+a]==100) {
-					        										break;
-						        								}
-					        									else {
-					        										MyData.influnceMatrix[i+a][j+a]+=(-1);
-					        									}
-						        							}
-						        							else if(n==6) {
-					        									if(MyData.influnceMatrix[i+a][j-a]==10) {
-					        										distance[n] = a;
-					        										isItOnRightTop = true;
-					        										break;
-						        								}
-					        									else if(MyData.influnceMatrix[i+a][j-a]==100) {
-					        										break;
-						        								}
-					        									else {
-					        										MyData.influnceMatrix[i+a][j-a] -= 1;
-					        									}
-						        							}
-						        							else if(n==7) {
-						        								if(MyData.influnceMatrix[i-a][j+a]==10) {
-						        									distance[n] = a;
-					        										isItOnLeftBottom = true;
-					        										break;
-						        								}
-					        									else if(MyData.influnceMatrix[i-a][j+a]==100) {
-					        										break;
-						        								}
-					        									else {
-					        										MyData.influnceMatrix[i-a][j+a]+=(-1);
-					        									}
-						        							}
-						        						}
-						        					}
-						        					//END POINT: Matrix scan
-						        					
-						        					for(int n = 0; n < 4; n++) {
-					        							if(n == 0) {
-					        								if((isItOnLeft || isItOnRight) && !(isItOnLeft && isItOnRight)) {
-					        									if(isItOnLeft) {
-					        										for(int m = 1; m < 4-distance[1]; m++) {
-					        											MyData.influnceMatrix[i][j+m] = -1;
-					        											for(int a = 0; a<4; a++) {
-					        												int blackCount = 0;
-							        										int whiteCount = 0;
-											        						for(int b = 0; b<11;  b++) {
-											        							if(b == 5) continue;
-											        							if(a == 0) {
-											        								Color c = MyData.pointsTree.get(setHashKey(i,j+m-5+b)).getColor();
-												        							if(b< 5) {
-												        								if(c.equals(Color.BLACK)) {
-									        												if(whiteCount != 0) {
-									        													whiteCount = 0;
-									        												}
-									        												blackCount++;
-									        											}
-									        											else if(c.equals(Color.WHITE)) {
-									        												if(blackCount != 0) {
-									        													blackCount = 0;
-									        												}
-									        												whiteCount++;
-									        											}
-												        							}
-												        							else {
-												        								if(c.equals(Color.BLACK)) {
-									        												if(whiteCount == 0) {
-									        													blackCount++;
-									        												}
-									        												else {
-									        													break;
-									        												}
-									        											}
-									        											else if(c.equals(Color.WHITE)) {
-									        												if(blackCount == 0) {
-									        													whiteCount++;
-									        												}
-									        												else {
-									        													break;
-									        												}
-									        											}
-									        											else if(c.equals(Color.RED)) {
-									        												break;
-									        											}
-												        							}
-												        						}
-										        							}
-											        						MyData.influnceMatrix[i][j+m] += blackCount - whiteCount -1;
-					        											}
-					        											
-					        										}
-					        									}
-					        									else { // isItOnRight
-					        										
-					        									}
-					        								}
-					        							}
-						        					}
 						        					
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
@@ -881,5 +703,500 @@ public class GoBoard extends JPanel {
 	
 	public int getYFromHashKey(int key) {
 		return key%19;
+	}
+	
+	public void checkMatrix(int i, int j) { 	// White
+		boolean isItOnLeft = false;
+		boolean isItOnRight = false;
+		boolean isItOnTop = false;
+		boolean isItOnBottom = false;
+		boolean isItOnLeftTop = false;
+		boolean isItOnRightBottom = false;
+		boolean isItOnRightTop = false;
+		boolean isItOnLeftBottom = false;
+		int[] distance = new int[8] ;
+		for(int n = 0; n<8; n++) {
+			for(int a = 1; a<5;  a++) {
+				if(n==0) {
+					if(MyData.influnceMatrix[i][j-a]==10) {
+						distance[n] = a;
+						isItOnLeft = true;
+						break;
+					}
+					else if(MyData.influnceMatrix[i][j-a]==100) {
+						break;
+					}
+					else {
+						MyData.influnceMatrix[i][j-a] -= 1;
+					}
+				}
+				else if(n==1) {
+					if(MyData.influnceMatrix[i][j+a]==10) {
+						distance[n] = a;
+						isItOnRight = true;
+						break;
+					}
+					else if(MyData.influnceMatrix[i][j+a]==100) {
+						break;
+					}
+					else {
+						MyData.influnceMatrix[i][j+a]+=(-1);
+					}
+				}
+				else if(n==2) {
+					if(MyData.influnceMatrix[i-a][j]==10) {
+						distance[n] = a;
+						isItOnTop = true;
+						break;
+					}
+					else if(MyData.influnceMatrix[i-a][j]==100) {
+						break;
+					}
+					else {
+						MyData.influnceMatrix[i-a][j] -= 1;
+					}
+				}
+				else if(n==3) {
+					if(MyData.influnceMatrix[i+a][j]==10) {
+						distance[n] = a;
+						isItOnBottom = true;
+						break;
+					}
+					else if(MyData.influnceMatrix[i+a][j]==100) {
+						break;
+					}
+					else {
+						MyData.influnceMatrix[i+a][j]+=(-1);
+					}
+				}
+				if(n==4) {
+					if(MyData.influnceMatrix[i-a][j-a]==10) {
+						distance[n] = a;
+						isItOnLeftTop = true;
+						break;
+					}
+					else if(MyData.influnceMatrix[i-a][j-a]==100) {
+						break;
+					}
+					else {
+						MyData.influnceMatrix[i-a][j-a] -= 1;
+					}
+				}
+				else if(n==5) {
+					if(MyData.influnceMatrix[i+a][j+a]==10) {
+						distance[n] = a;
+						isItOnRightBottom = true;
+						break;
+					}
+					else if(MyData.influnceMatrix[i+a][j+a]==100) {
+						break;
+					}
+					else {
+						MyData.influnceMatrix[i+a][j+a]+=(-1);
+					}
+				}
+				else if(n==6) {
+					if(MyData.influnceMatrix[i+a][j-a]==10) {
+						distance[n] = a;
+						isItOnRightTop = true;
+						break;
+					}
+					else if(MyData.influnceMatrix[i+a][j-a]==100) {
+						break;
+					}
+					else {
+						MyData.influnceMatrix[i+a][j-a] -= 1;
+					}
+				}
+				else if(n==7) {
+					if(MyData.influnceMatrix[i-a][j+a]==10) {
+						distance[n] = a;
+						isItOnLeftBottom = true;
+						break;
+					}
+					else if(MyData.influnceMatrix[i-a][j+a]==100) {
+						break;
+					}
+					else {
+						MyData.influnceMatrix[i-a][j+a]+=(-1);
+					}
+				}
+			}
+		}
+		//END POINT: Matrix scan
+		
+		for(int n = 0; n < 4; n++) {
+			if(n == 0) {
+				if((isItOnLeft || isItOnRight) && !(isItOnLeft && isItOnRight)) {
+					if(isItOnLeft) {
+						for(int m = 1; m < 4-distance[1]; m++) {
+							if(MyData.influnceMatrix[i][j+m] == -10) continue;
+							MyData.influnceMatrix[i][j+m] = -1;
+							for(int a = 0; a<4; a++) {
+								int blackCount = 0;
+								int whiteCount = 0;
+        						for(int b = 0; b<11;  b++) {
+        							if(b == 5) continue;
+        							if(a == 0) {
+        								int c1 = b+5;
+        								if(c1 >= 11) break;
+        								Color c = null;
+        								try {
+        									c = MyData.pointsTree.get(setHashKey(i,j+m-5+c1)).getColor();
+        								} catch(Exception e1) {
+        									
+        								}
+        								if(c.equals(Color.BLACK)) {
+											if(whiteCount == 0) {
+												blackCount++;
+											}
+											else {
+												break;
+											}
+										}
+										else if(c.equals(Color.WHITE)) {
+											if(blackCount == 0) {
+												whiteCount++;
+											}
+											else {
+												break;
+											}
+										}
+										else if(c.equals(Color.RED)) {
+											break;
+										}
+	        						}
+        							if(a == 1) {
+        								Color c = null;
+        								try {
+        									c = MyData.pointsTree.get(setHashKey(i+m-5+b,j)).getColor();
+        								} catch(Exception e1) {
+        									
+        								}
+        								
+	        							if(b< 5) {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount != 0) {
+													whiteCount = 0;
+												}
+												blackCount++;
+	        								}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount != 0) {
+													blackCount = 0;
+												}
+												whiteCount++;
+											}
+	        							}
+	        							else {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount == 0) {
+													blackCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount == 0) {
+													whiteCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.RED)) {
+												break;
+											}
+	        							}
+	        						}
+        							if(a == 2) {
+        								Color c = null;
+        								try {
+        									c = MyData.pointsTree.get(setHashKey(i+m-5+b,j+m-5+b)).getColor();
+        								} catch(Exception e1) {
+        									
+        								}
+        								
+	        							if(b< 5) {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount != 0) {
+													whiteCount = 0;
+												}
+												blackCount++;
+	        								}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount != 0) {
+													blackCount = 0;
+												}
+												whiteCount++;
+											}
+	        							}
+	        							else {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount == 0) {
+													blackCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount == 0) {
+													whiteCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.RED)) {
+												break;
+											}
+	        							}
+	        						}
+        							if(a == 3) {
+        								Color c = null;
+        								try {
+        									c = MyData.pointsTree.get(setHashKey(i+m+5-b,j+m-5+b)).getColor();
+        								} catch(Exception e1) {
+        									
+        								}
+	        							if(b< 5) {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount != 0) {
+													whiteCount = 0;
+												}
+												blackCount++;
+	        								}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount != 0) {
+													blackCount = 0;
+												}
+												whiteCount++;
+											}
+	        							}
+	        							else {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount == 0) {
+													blackCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount == 0) {
+													whiteCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.RED)) {
+												break;
+											}
+	        							}
+	        						}
+    							}
+        						MyData.influnceMatrix[i][j+m] += blackCount - whiteCount;
+							}
+							
+							
+						}
+					}
+					else { // isItOnRight
+						for(int m = 1; m < 4-distance[0]; m++) {
+							if(MyData.influnceMatrix[i][j-m] == -10) continue;
+							MyData.influnceMatrix[i][j-m] = -1;
+							for(int a = 0; a<4; a++) {
+								int blackCount = 0;
+								int whiteCount = 0;
+        						for(int b = 0; b<11;  b++) {
+        							if(b == 5) continue;
+        							if(a == 0) {
+        								int c1 = b+5;
+        								if(c1 >= 11) break;
+        								Color c = null;
+        								try {
+        									//??? 
+        									c = MyData.pointsTree.get(setHashKey(i,j-m-5+c1)).getColor();
+        								} catch(Exception e1) {
+        									
+        								}
+	        							if(b< 5) {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount != 0) {
+													whiteCount = 0;
+												}
+												blackCount++;
+	        								}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount != 0) {
+													blackCount = 0;
+												}
+												whiteCount++;
+											}
+	        							}
+	        							else {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount == 0) {
+													blackCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount == 0) {
+													whiteCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.RED)) {
+												break;
+											}
+	        							}
+	        						}
+        							if(a == 1) {
+        								Color c = null;
+        								try {
+        									c = MyData.pointsTree.get(setHashKey(i+m-5+b,j)).getColor();
+        								} catch(Exception e1) {
+        									
+        								}
+        								
+	        							if(b< 5) {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount != 0) {
+													whiteCount = 0;
+												}
+												blackCount++;
+	        								}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount != 0) {
+													blackCount = 0;
+												}
+												whiteCount++;
+											}
+	        							}
+	        							else {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount == 0) {
+													blackCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount == 0) {
+													whiteCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.RED)) {
+												break;
+											}
+	        							}
+	        						}
+        							if(a == 2) {
+        								Color c = null;
+        								try {
+        									c = MyData.pointsTree.get(setHashKey(i+m-5+b,j+m-5+b)).getColor();
+        								} catch(Exception e1) {
+        									
+        								}
+        								
+	        							if(b< 5) {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount != 0) {
+													whiteCount = 0;
+												}
+												blackCount++;
+	        								}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount != 0) {
+													blackCount = 0;
+												}
+												whiteCount++;
+											}
+	        							}
+	        							else {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount == 0) {
+													blackCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount == 0) {
+													whiteCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.RED)) {
+												break;
+											}
+	        							}
+	        						}
+        							if(a == 3) {
+        								Color c = null;
+        								try {
+        									c = MyData.pointsTree.get(setHashKey(i+m+5-b,j+m-5+b)).getColor();
+        								} catch(Exception e1) {
+        									
+        								}
+	        							if(b< 5) {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount != 0) {
+													whiteCount = 0;
+												}
+												blackCount++;
+	        								}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount != 0) {
+													blackCount = 0;
+												}
+												whiteCount++;
+											}
+	        							}
+	        							else {
+	        								if(c.equals(Color.BLACK)) {
+												if(whiteCount == 0) {
+													blackCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.WHITE)) {
+												if(blackCount == 0) {
+													whiteCount++;
+												}
+												else {
+													break;
+												}
+											}
+											else if(c.equals(Color.RED)) {
+												break;
+											}
+	        							}
+	        						}
+    							}
+        						MyData.influnceMatrix[i][j+m] += blackCount - whiteCount;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
