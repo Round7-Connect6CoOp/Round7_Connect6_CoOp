@@ -29,7 +29,7 @@ public class MyData {
 	
 	public static int count = 0;
 	private int[][] info = new int[4][11]; // each elements color information
-	private int[][] vectorKey = new int[4][11]; // each elements vector info
+	private Integer [][] vectorKey = new Integer [4][11]; // each elements vector info
 	
 	public MyData(int x, int y, Color color) {
 		this.x = x;
@@ -38,24 +38,21 @@ public class MyData {
 		
 		// Horizontal 0, Vertical 1, Left-Right Diagonal 2, Right-Left Diagonal 3
 		for(int i=0; i<4; i++) {
-			vectorKey[i][5] = setHashKey(x,y);
 			try {
 				for(int j=0; j<11; j++) {
-					if(j == 5) {
-						continue;
-					}
 					if(i==0) { // horizontal
 						vectorKey[i][j] = setHashKey(x,y-5+j);
 					}
 					else if(i==1) { //vertical
-						vectorKey[i][j] =  setHashKey(x-5+j,y);
+						vectorKey[i][j] =(setHashKey(x-5+j,y));
 					}
 					else if(i==2) { // Left-Right
-						vectorKey[i][j] = setHashKey(x-5+j,y-5+j);
+						vectorKey[i][j] = (setHashKey(x-5+j,y-5+j));
 					}
 					else if(i==3) { // Right-Left
-						vectorKey[i][j] = setHashKey(x+5-j,y-5+j);
+						vectorKey[i][j]= (setHashKey(x+5-j,y-5+j));
 					}
+					
 				}
 			} catch(Exception e) {
 				
@@ -136,12 +133,14 @@ public class MyData {
 		this.info = info;
 	}
 
-	public int[][] getVectorKey() {
+	public Integer[][] getVectorKey() {
 		return vectorKey;
 	}
 
-	public void setVectorKey(int[][] vectorKey) {
+	public void setVectorKey(Integer[][]  vectorKey) {
 		this.vectorKey = vectorKey;
 	}
-	
+
+
+
 }
