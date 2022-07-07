@@ -138,7 +138,66 @@ public class GoBoard extends JPanel {
 						        					currentColor = Color.WHITE;
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -10;
+<<<<<<< HEAD
 						        					MyData.newestWhite.push(setHashKey(i,j));
+=======
+<<<<<<< HEAD
+						        					
+						        					for(int n=0; n<4; n++) {
+						        						for(int a=1; a<=5; a++) {
+						        							if(n==0) {
+						        								if(MyData.influnceMatrix[i-a][j]!=-10 || MyData.influnceMatrix[i-a][j]!=100) {
+						        									MyData.influnceMatrix[i-a][j] +=-1;
+							        								MyData.influnceMatrix[i+a][j] +=-1;
+						        								}
+						        								
+							        						}
+							        						if(n==1) {
+							        							MyData.influnceMatrix[i-a][j+a] +=-1;
+							        							MyData.influnceMatrix[i+a][j+a] +=-1;
+							        						}
+															if(n==2) {
+																MyData.influnceMatrix[i][j+a] +=-1;
+																MyData.influnceMatrix[i][j-a] +=-1;
+															}
+															if(n==3) {
+																MyData.influnceMatrix[i+a][j+a] +=-1;
+																MyData.influnceMatrix[i-a][j-a] +=-1;
+															}
+						        						}
+						        					}
+						        					
+						        					
+						        					
+						        					
+						        					for(int a=1; a<=5; a++) {
+						        						MyData.influnceMatrix[i-a][j] +=-1;
+						        						MyData.influnceMatrix[i-a][j+a] +=-1;
+						        						MyData.influnceMatrix[i][j+a] +=-1;
+						        						MyData.influnceMatrix[i+a][j+a] +=-1;
+						        						if(MyData.influnceMatrix[i][j+a]==10 || MyData.influnceMatrix[i][j+a]==100) {
+						        							//다음중지 
+						        						}
+						        						else if(MyData.influnceMatrix[i][j+a]==-10){
+						        							MyData.influnceMatrix[i][j+a]= -10;
+						        						}
+						        						else {
+						        							MyData.influnceMatrix[i][j+a]=-1;
+						        						}
+						        					}
+						        					
+						        					for(int a=1; a<=5; a++) {
+						        						MyData.influnceMatrix[i-a][j-a] +=-1;
+						        						MyData.influnceMatrix[i][j-a] +=-1;
+						        						MyData.influnceMatrix[i+a][j-a] +=- 1;
+						        						MyData.influnceMatrix[i+a][j] +=-1;
+						        					}
+						        					
+						        					
+						        					
+						        					
+=======
+>>>>>>> 95cd3ad701d9b702f5725d5cddb5da5201ab3087
 //						        					for(int a = 0; a < 11; a++) {
 //						        						if(a==5) continue;
 //						        						if(!MyData.influnceMatrix[i][j-5+a].equals(100) && !MyData.influnceMatrix[i][j-5+a].equals(10) && !MyData.influnceMatrix[i][j-5+a].equals(-10){
@@ -153,6 +212,7 @@ public class GoBoard extends JPanel {
 //						        						MyData.influnceMatrix[i-5+a][j-5+a] +=-1;
 //						        						MyData.influnceMatrix[i+5-a][j-5+a] +=-1;
 //						        					}
+>>>>>>> 5716d12be234baec9b315eae61494190df08f3bd
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
@@ -203,6 +263,7 @@ public class GoBoard extends JPanel {
 					        						newData.getInformation(gameMatrix);
 					        						blackTurnSecond = true;
 					        						whiteTurnSecond = false;
+					        						
 					        					}
 					        				}
 					        			}
