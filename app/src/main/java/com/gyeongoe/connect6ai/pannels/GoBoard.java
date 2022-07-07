@@ -119,8 +119,9 @@ public class GoBoard extends JPanel {
 					        				}
 					        				else {
 					        					for(int k = 0; k < 2; k++) {
-				        							int p = (int) (Math.random() * 19);
-					        						int q = (int) (Math.random() * 19);
+				        							int p = 10;
+					        						int q = 9+k;
+					        						MyData.newestBlack.push(setHashKey(p,q));
 					        						MyData data = new MyData(p, q, Color.WHITE);
 					        						MyData.clickedPoint.add(data);
 				        						}

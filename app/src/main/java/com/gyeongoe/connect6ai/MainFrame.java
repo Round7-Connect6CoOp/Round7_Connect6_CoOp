@@ -67,6 +67,7 @@ public class MainFrame extends JFrame {
 					goBoard.setAreWeSecond(true);
 				}
 				MyData.pointsTree.clear();
+				
 				goBoard.setStart(true);
 				goBoard.setBlockNumber(controlPanel.getNumberOfDisabledPoint());
 				for(int i = 0; i < 19; i++) {
