@@ -139,7 +139,6 @@ public class GoBoard extends JPanel {
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -10;
 						        					MyData.newestWhite.push(setHashKey(i,j));
-<<<<<<< HEAD
 						        					boolean checkLeft = false;
 						        					boolean checkRight = false;
 						        					int distance = 0;
@@ -177,25 +176,19 @@ public class GoBoard extends JPanel {
 						        						}
 						        						
 						        					}
-=======
-						        					
->>>>>>> f9a719f4c804c6e6772e3a903fb6f350e72df43e
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
 						        						newData.getInformation(gameMatrix);
 						        						MyData.pointsTree.put(setHashKey(i, j), newData);
-						        						System.out.println("Hash Key: " + setHashKey(i, j));
-						        						for(int a = 0; a < 4; a++) {
+						        						//START POINT: update the data.
+								        				for(int a = 0; a < 4; a++) {
 					        								for(int b = 0; b < 11; b ++) {
-					        									System.out.println("a: " + a + " b: " + b);
-				        										System.out.println("newData.getVectorMap().get(a)[b]: " + (newData.getVectorKey()[a][b]));
 					        									if(b == 5) continue;
 					        									if(MyData.pointsTree.get(newData.getVectorKey()[a][b])!= null){
 					        										MyData oldData = MyData.pointsTree.get((newData.getVectorKey()[a][b]));
 					        										for(int c = 0; c < 4; c++) {
 								        								for(int d = 0; d < 11; d ++) {
-								        									System.out.println("oldData.getVectorKey()[c][d]: " + oldData.getVectorKey()[c][d]);
 								        									if(oldData.getVectorKey()[c][d].equals(setHashKey(i, j))) {
 								        										oldData.getInfo()[c][d] = 2;
 								        									}
@@ -204,6 +197,7 @@ public class GoBoard extends JPanel {
 					        									}
 					        								}
 						        						}
+								        				//END POINT: update the data.
 						        						blackTurnFirst = true;
 						        						
 						        						for(int k = 0; k < 2; k++) {
@@ -221,17 +215,14 @@ public class GoBoard extends JPanel {
 						        						MyData.clickedPoint.add(newData);
 						        						newData.getInformation(gameMatrix);
 								        				MyData.pointsTree.put(setHashKey(i, j), newData);
-								        				System.out.println("HashKey: " + setHashKey(i, j));
+								        				//START POINT: update the data.
 								        				for(int a = 0; a < 4; a++) {
 					        								for(int b = 0; b < 11; b ++) {
-					        									System.out.println("a: " + a + " b: " + b);
-				        										System.out.println("newData.getVectorMap().get(a)[b]: " + (newData.getVectorKey()[a][b]));
 					        									if(b == 5) continue;
 					        									if(MyData.pointsTree.get(newData.getVectorKey()[a][b])!= null){
 					        										MyData oldData = MyData.pointsTree.get((newData.getVectorKey()[a][b]));
 					        										for(int c = 0; c < 4; c++) {
 								        								for(int d = 0; d < 11; d ++) {
-								        									System.out.println("oldData.getVectorKey()[c][d]: " + oldData.getVectorKey()[c][d]);
 								        									if(oldData.getVectorKey()[c][d].equals(setHashKey(i, j))) {
 								        										oldData.getInfo()[c][d] = 2;
 								        									}
@@ -240,6 +231,7 @@ public class GoBoard extends JPanel {
 					        									}
 					        								}
 						        						}
+								        				//END POINT: update the data.
 						        						whiteTurnSecond = true;
 						        					}
 						        				}
@@ -254,10 +246,6 @@ public class GoBoard extends JPanel {
 					        						MyData.clickedPoint.add(newData);
 					        						newData.getInformation(gameMatrix);
 					        						blackTurnSecond = false;
-					        						for(int a = 0; a < 4; a++) {
-					        							for(int b = 0; b < 11; b++) {
-					        							}
-					        						}
 					        						for(int k = 0; k < 2; k++) {
 					        							int p = (int) (Math.random() * 19);
 						        						int q = (int) (Math.random() * 19);
@@ -270,10 +258,6 @@ public class GoBoard extends JPanel {
 					        						MyData newData = new MyData(i, j, currentColor);
 					        						MyData.clickedPoint.add(newData);
 					        						newData.getInformation(gameMatrix);
-					        						for(int a = 0; a < 4; a++) {
-					        							for(int b = 0; b < 11; b++) {
-					        							}
-					        						}
 					        						blackTurnSecond = true;
 					        						whiteTurnSecond = false;
 					        					}
