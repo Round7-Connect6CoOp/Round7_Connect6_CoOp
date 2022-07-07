@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 
 import com.gyeongoe.connect6ai.MainFrame;
 import com.gyeongoe.connect6ai.data.MyData;
+import com.gyeongoe.connect6ai.logic.GameLogic;
 
 public class GoBoard extends JPanel {
 	Ellipse2D.Double[][] ellipse = new Ellipse2D.Double[20][20];
@@ -102,6 +103,7 @@ public class GoBoard extends JPanel {
 					        				MyData newData = new MyData(i, j, currentColor);
 					        				MyData.clickedPoint.add(newData);
 					        				MyData.influnceMatrix[i][j] = 10;
+					        				MyData.newestBlack.push(setHashKey(i,j));
 				        					for(int a = 0; a < 11; a++) {
 				        						if(a==5) continue;
 				        						MyData.influnceMatrix[i][j-5+a] +=1;
@@ -136,6 +138,7 @@ public class GoBoard extends JPanel {
 						        					currentColor = Color.WHITE;
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -10;
+						        					MyData.newestWhite.push(setHashKey(i,j));
 						        					
 						        					for(int n=0; n<4; n++) {
 						        						for(int a=1; a<=5; a++) {
@@ -170,7 +173,6 @@ public class GoBoard extends JPanel {
 						        						MyData.influnceMatrix[i][j+a] +=-1;
 						        						MyData.influnceMatrix[i+a][j+a] +=-1;
 						        						if(MyData.influnceMatrix[i][j+a]==10 || MyData.influnceMatrix[i][j+a]==100) {
-						        							
 						        						}
 						        						else if(MyData.influnceMatrix[i][j+a]==-10){
 						        							MyData.influnceMatrix[i][j+a]= -10;
@@ -198,6 +200,7 @@ public class GoBoard extends JPanel {
 						        						whiteTurnFirst=false;
 						        						blackTurnFirst = true;
 						        						for(int k = 0; k < 2; k++) {
+						        							GameLogic nextStep = new GameLogic();
 						        							int p = (int) (Math.random() * 19);
 							        						int q = (int) (Math.random() * 19);
 							        						MyData data = new MyData(p, q, Color.BLACK);
