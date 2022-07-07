@@ -121,7 +121,84 @@ public class GameLogic {
 				MyData.newestWhite.push(tempWhiteStack.pop());
 			} // Second Condition :lose?
 			
+			for(int i =0; i<3; i++) {
+				int key = 0;
+				try {
+					key =MyData.newestBlack.pop();
+					tempBlackStack.push(key);
+					int infos[][] = MyData.pointsTree.get(key).getInfo();
+					int blank = 0;
+					int black = 1;
+					for(int a=0; a<4; a++) {
+						for(int b = 0; b < 11;b++) {
+							if(b == 5) {
+								if((blank + black == 6) &&(blank >=2)) {
+									win = true;
+									 MyData.pointsTree.get(key).getVectorKey();
+									return answer;
+								}
+								else {
+									answer.clear();
+									blank = 0;
+									black = 1;
+								}
+							}
+							if(infos[a][b] == 0) {
+								blank++;
+								answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+							}
+							if(infos[a][b] == 1) {
+								black++;
+							}
+						}
+					}
+				} catch(Exception e) {
+				}
+				
+			}
+			answer.clear();
+			while(!tempBlackStack.empty()) {
+				MyData.newestBlack.push(tempBlackStack.pop());
+			} 
 			
+			for(int i =0; i<3; i++) {
+				int key = 0;
+				try {
+					key =MyData.newestWhite.pop();
+					tempWhiteStack.push(key);
+					int infos[][] = MyData.pointsTree.get(key).getInfo();
+					int blank = 0;
+					int white = 1;
+					for(int a=0; a<4; a++) {
+						for(int b = 0; b < 11;b++) {
+							if(b == 5) {
+								if(blank <= 2 && white >=4) {
+									win = true;
+									 MyData.pointsTree.get(key).getVectorKey();
+									return answer;
+								}
+								else {
+									answer.clear();
+									blank = 1;
+									white = 0;
+								}
+							}
+							if(infos[a][b] == 0) {
+								blank++;
+								answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+							}
+							if(infos[a][b] == 2) {
+								white++;
+							}
+						}
+					}
+				} catch(Exception e) {
+				}
+				
+			}
+			while(!tempWhiteStack.empty()) {
+				MyData.newestWhite.push(tempWhiteStack.pop());
+			} // Second Condition :lose?
 			
 		}
 		
