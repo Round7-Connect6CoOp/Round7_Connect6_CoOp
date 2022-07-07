@@ -118,8 +118,9 @@ public class GoBoard extends JPanel {
 					        				}
 					        				else {
 					        					for(int k = 0; k < 2; k++) {
-				        							int p = (int) (Math.random() * 19);
-					        						int q = (int) (Math.random() * 19);
+				        							int p = 10;
+					        						int q = 9+k;
+					        						MyData.newestBlack.push(setHashKey(p,q));
 					        						MyData data = new MyData(p, q, Color.WHITE);
 					        						MyData.clickedPoint.add(data);
 				        						}
@@ -304,7 +305,7 @@ public class GoBoard extends JPanel {
 
 				        				System.out.println(i+" "+j);
 				        				gameMatrix[i][j] = 3;
-				        				MyData.influnceMatrix[i][j] = 100;
+				        				MyData.influnceMatrix[i][j] = 1000;
 				        				usedEllipse[i][j] = new Ellipse2D.Double(i*30+20, j*30+20,20, 20);
 				        				MyData newData = new MyData(i, j, currentColor);
 				        				

@@ -15,6 +15,7 @@ import javax.swing.event.CaretListener;
 
 import com.gyeongoe.connect6ai.MainFrame;
 import com.gyeongoe.connect6ai.buttons.RoundButton;
+import com.gyeongoe.connect6ai.logic.GameLogic;
 
 public class ControlPanel extends JPanel {
 	private JTextField numberOfDisabledPointTextField = new JTextField();
@@ -78,8 +79,10 @@ public class ControlPanel extends JPanel {
 	            	secondButton.setForeground(Color.BLACK);
 	            	firstButton.setForeground(new Color(61,205,91));
 	  				firstCheck = true;
-	  				secondCheck = false; 
-	              }              
+	  				secondCheck = false;
+	  				GameLogic.areWeFirst = true;
+	  				GameLogic.areWeSecond = false;
+ 	              }              
 	          }
 	      });
 		
@@ -93,7 +96,9 @@ public class ControlPanel extends JPanel {
 	  				firstButton.setForeground(Color.BLACK);
 	            	secondButton.setForeground(new Color(61,205,91));
 	  				firstCheck = false;
-	  				secondCheck = true;  
+	  				secondCheck = true; 
+	  				GameLogic.areWeFirst = false;
+	  				GameLogic.areWeSecond = true;
 	              }              
 	          }
 	      });

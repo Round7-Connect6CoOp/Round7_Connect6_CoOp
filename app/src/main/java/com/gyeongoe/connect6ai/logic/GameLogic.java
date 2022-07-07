@@ -1,8 +1,10 @@
 package com.gyeongoe.connect6ai.logic;
 
 import java.awt.Point;
+import java.awt.datatransfer.SystemFlavorMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 import com.gyeongoe.connect6ai.data.MyData;
 
@@ -11,183 +13,372 @@ public class GameLogic {
 	// For Game Logic Blank null, Black 10, White 10, Effect range of black +1, Effect range of White -1, Ban 100
 	// Horizontal 0, Vertical 1, Left-Right Diagonal 2, Right-Left Diagonal 3
 	
+	public static boolean areWeFirst = false;
+	public static boolean areWeSecond = false;
 	
+	private Stack <Integer> tempBlackStack = new Stack <Integer>();
+	private Stack <Integer> tempWhiteStack = new Stack <Integer>();
+	
+	int x1, y1, x2, y2;
 	public ArrayList<Integer> minArray = new ArrayList<Integer>();
 	public ArrayList<Integer> maxArray = new ArrayList<Integer>();
 	
-	public GameLogic(){
-		//1 - ìš°ë¦¬ë§ì´ 4ê°œ ì´ìƒì¸ ê³³ ì°¾ê¸° - ìƒëŒ€ê°€ ìš°ë¦¬ì˜ ë§ì„ ë§‰ëŠ”ë° 3ê°œì´ìƒì˜ ëŒì´ í•„ìš”í•œ ê²½ìš° 
-		//2 - ìƒëŒ€ë§ì´ ì´ê¸¸ ìˆ˜ ìˆëŠ” 4ê°œê°€ ì—°ì†ëœ ìŠ¤í‹±ì„ ì°¾ì•„ ë§‰ê¸° 
-			//2-1 ìš°ë¦¬ì˜ ë§ì´ 4ê°œê°€ ë  ìˆ˜ ìˆëŠ” ê²½ìš° 
-			//2-2 ìš°ë¦¬ì˜ ë§ì´ 3ê°œê°€ ë  ìˆ˜ ìˆëŠ” ê²½ìš° 
-			//2-3 ìš°ë¦¬ì˜ ë§ì´ 2ê°œê°€ ë  ìˆ˜ ìˆëŠ” ê²½ìš°
-		//3 - ìš°ë¦¬ì˜ ë§ì„ ì—°ì†í•´ 4,5ê°œë¥¼ ë§Œë“¤ ìˆ˜ ìˆëŠ” ê²½ìš° 
-		//4 - ìƒëŒ€ì˜ 3ì´ë‚˜ 2ë¥¼ ë§‰ìœ¼ë©´ì„œ ìš°ë¦¬ê°€ 3, 2ê°€ ë  ìˆ˜ ìˆëŠ” ìë¦¬ ì„ íƒ 
-		
-		
-		//ìƒëŒ€ë¥¼ ë§‰ì„ ë•Œì—ëŠ” ê°€ì¤‘ì¹˜ê°€ ì‘ì€ ê³³ì— ë†“ëŠ” ê²ƒì´ ìœ ë¦¬
-			//ê°€ì¤‘ì¹˜ì˜ ê°’ì´ ê°™ì„ ê²½ìš°ì—ëŠ” ê°™ì€ ê°€ì¤‘ì¹˜ë¥¼ ê°€ì§€ëŠ” ëª¨ë“  ëŒì˜ ì˜í–¥ë ¥ì„ ê³„ì‚° í•œ í›„ì— ë‘ê¸° 
-		//ê³µê²©ì„ í•  ë•Œì—ëŠ” ê°€ì¤‘ì¹˜ê°€ ë†’ì€ ê³³ì— ë†“ëŠ” ê²ƒì´ ìœ ë¦¬
-			//ê°€ì¤‘ì¹˜ì˜ ê°’ì´ ê°™ì„ ê²½ìš°ì—ëŠ” ê°™ì€ ê°€ì¤‘ì¹˜ë¥¼ ê°€ì§€ëŠ” ëª¨ë“  ëŒì˜ ì˜í–¥ë ¥ì„ ê³„ì‚° í•œ í›„ì— ë‘ê¸° 
-		
-		//ëŒì€ ë‘ê°œë¥¼ ë‘ì–´ì•¼ í•¨ìœ¼ë¡œ ëª¨ë“  ì¡°ê±´ì„ ìµœì†Œ ë‘ë²ˆì”©ì€ í™•ì¸í•´ì•¼
-		int count = 0; //í˜„ì¬ë‘” ë°”ë‘‘ëŒì˜ ê°¯ìˆ˜ 
-		int blank = 0; //í˜„ì¬ ìŠ¤í‹±ì˜ ì¹´ìš´íŠ¸ë¥¼ ì €ì¥ - ì´ ì¹´ìš´íŠ¸ê°€ 3ì´ìƒì´ ë˜ë©´ ë‹¤ìŒ ìŠ¤í‹±ìœ¼ë¡œ ë„˜ì–´ê° 
-		int dollColor; //í˜„ì¬ ëŒì˜ ìƒ‰ìƒì„ ì €ì¥ 
-		int dollCount = 0;//í˜„ì¬ ê°™ì€ ìƒ‰ìƒì˜ ëŒì˜ ê°¯ìˆ˜ë¥¼ ì¹´ìš´íŠ¸ 
-		
-		while(count<=2) {
-			for() {//ì£¼ì–´ì§„ ëª¨ë“  ëŒë“¤ì— ëŒ€í•´ì„œ ìŠ¤í‹± ëŒê¸°
-				for(int i=0; i<4; i++) {
-					dollColor = [][5]//ì¤‘ê°„ê°’ì˜ ëŒì˜ ìƒ‰ìƒ ì½ì–´ì˜¤ê¸° 
-					if(/*ìš°ë¦¬ì˜ ëŒì¼ ë•Œ*/){//4ê°œì˜ ì—°ì†ì„ ë‘ê°œë¥¼ ë§Œë“¤ë©´ ë¬´ì¡°ê±´ ìŠ¹ë¦¬ í•œìª½ì´ ë§‰íŒ 4ê°œì˜ ì—°ì†ê³¼ ì–‘ì˜†ì´ ëª¨ë‘ ëš«ë¦° 4ê°œì˜ ì—°ì†ì´ ìµœì†Œ ì¡°ê±´ 
-						//ë§‰í˜€ ìˆë”ë¼ë„ ìƒëŒ€ê°€ ë°©ì–´ì— 2ê°œì˜ ëŒì„ ëª¨ë‘ ì“°ê²Œí•˜ëŠ” ê²ƒì´ ìœ ë¦¬ 
-
-						//0~5ê¹Œì§€ì—ì„œ ê°™ì€ ìƒ‰ì˜ ëŒì´ 4ê°œ, ê³µë°± 2ê°œ 
-						//6~11ê¹Œì§€ì—ì„œ ê°™ì€ ìƒ‰ì˜ ëŒì´ 4ê°œ, ê³µë°± 2ê°œ 
-						
-						for(int j=0; j<6; j++) {//0~5
-							if(ëŒì´ë‹¤) {
-								if(/*ëŒì˜ ìƒ‰ì´ ìš°ë¦¬ì¼ ë•Œ*/dollColor == ìš°ë¦¬ëŒì˜ ìƒ‰ ){
-									if(blank<=2 && dollCount == 4) {
-										//4ì´ìƒì¸ ê³³ì— ëŒ ë†“ê¸° 
-										//ê°€ì¤‘ì¹˜ê°€ ê°€ì¥ ë†’ì€ ê³³ì— ë†“ê¸° 
-									}
-									else {
-										dollCount++;
-									}
-								}	
-								else if(/*ëŒì˜ ìƒ‰ì´ ìƒëŒ€ì¼ ë•Œ*/dollColor != ìš°ë¦¬ëŒì˜ ìƒ‰){
-									break;
+	private boolean win = false;
+	ArrayList<Integer> answer = new ArrayList<Integer>();
+	
+	public GameLogic(int x1, int y1, int x2, int y2){
+		this.x1 = x1;
+		this.x2 = x2;
+		this.y1 = y1;
+		this.y2 = y2;
+	}
+		//1 - ¿ì¸®¸»ÀÌ 4°³ ÀÌ»óÀÎ °÷ Ã£±â - »ó´ë°¡ ¿ì¸®ÀÇ ¸»À» ¸·´Âµ¥ 3°³ÀÌ»óÀÇ µ¹ÀÌ ÇÊ¿äÇÑ °æ¿ì 
+		//2 - »ó´ë¸»ÀÌ ÀÌ±æ ¼ö ÀÖ´Â 4°³°¡ ¿¬¼ÓµÈ ½ºÆ½À» Ã£¾Æ ¸·±â 
+			//2-1 ¿ì¸®ÀÇ ¸»ÀÌ 4°³°¡ µÉ ¼ö ÀÖ´Â °æ¿ì 
+			//2-2 ¿ì¸®ÀÇ ¸»ÀÌ 3°³°¡ µÉ ¼ö ÀÖ´Â °æ¿ì 
+			//2-3 ¿ì¸®ÀÇ ¸»ÀÌ 2°³°¡ µÉ ¼ö ÀÖ´Â °æ¿ì
+		//3 - ¿ì¸®ÀÇ ¸»À» ¿¬¼ÓÇØ 4,5°³¸¦ ¸¸µé ¼ö ÀÖ´Â °æ¿ì 
+		//4 - »ó´ëÀÇ 3ÀÌ³ª 2¸¦ ¸·À¸¸é¼­ ¿ì¸®°¡ 3, 2°¡ µÉ ¼ö ÀÖ´Â ÀÚ¸® ¼±ÅÃ 
+	public ArrayList<Integer> makeTheBestDecision(){
+		System.out.println(areWeFirst);
+		if(areWeFirst) {
+			for(int i =0; i<4; i++) {
+				int key = 0;
+				try {
+					key =MyData.newestBlack.pop();
+					tempBlackStack.push(key);
+					int infos[][] = MyData.pointsTree.get(key).getInfo();
+					int blank = 0;
+					int black = 1;
+					for(int a=0; a<4; a++) {
+						for(int b = 0; b < 11;b++) {
+							if(b == 5) {
+								if((blank + black == 6) &&(blank >=2)) {
+									win = true;
+									 MyData.pointsTree.get(key).getVectorKey();
+									return answer;
+								}
+								else {
+									answer.clear();
+									blank = 0;
+									black = 1;
 								}
 							}
-							else {//ê³µë°±ì´ë‹¤ 
+							if(infos[a][b] == 0) {
 								blank++;
-								if(blank>2) break;
+								answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
 							}
-						}
-						for(int j=6; j<11; j++) {//6~11
-							if(ëŒì´ë‹¤) {
-								if(/*ëŒì˜ ìƒ‰ì´ ìš°ë¦¬ì¼ ë•Œ*/dollColor == ìš°ë¦¬ëŒ ){
-									if(blank<=2 && dollCount == 4) {
-										//4ì´ìƒì¸ ê³³ì— ëŒ ë†“ê¸° 
-									}
-									else {
-										dollCount++;
-									}
-								}	
-								else if(/*ëŒì˜ ìƒ‰ì´ ìƒëŒ€ì¼ ë•Œ*/dollColor != ìš°ë¦¬ëŒ )){
-									break;
-								}
-							}
-							else {//ê³µë°±ì´ë‹¤
-								blank++;
-								if(blank>2) break;
+							if(infos[a][b] == 1) {
+								black++;
 							}
 						}
 					}
-					else if() {//ìƒëŒ€ì˜ ëŒì¼ 
-						for(int j=0; j<6; j++) {//0~5
-							if(ëŒì´ë‹¤) {
-								if(/*ëŒì˜ ìƒ‰ì´ ìš°ë¦¬ì¼ ë•Œ*/dollColor == ìƒëŒ€ì˜ ëŒ ){
-									if(blank<=2 && dollCount == 4) {
-										//4ì´ìƒì¸ ê³³ì— ëŒ ë†“ê¸° 
-										//4ê°€ ë  ìˆ˜ìˆëŠ” ê²½ìš°  1 2 1, 1 1 2, 2 1 1, 2 2, 3 1, 1 3, 4
-										//ë§‰í˜€ ìˆë”ë¼ë„ ìƒëŒ€ê°€ ë°©ì–´ì— 2ê°œì˜ ëŒì„ ëª¨ë‘ ì“°ê²Œí•˜ëŠ” ê²ƒì´ ìœ ë¦¬ 
-										//0~5ê¹Œì§€ì—ì„œ ê°™ì€ ìƒ‰ì˜ ëŒì´ 4ê°œ, ê³µë°± 2ê°œ 
-										//6~1ê¹Œì§€ì—ì„œ ê°™ì€ ìƒ‰ì˜ ëŒì´ 4ê°œ, ê³µë°± 2ê°œ 
-									}
-									else {
-										dollCount++;
-									}
-								}	
-								else if(/*ëŒì˜ ìƒ‰ì´ ìƒëŒ€ì¼ ë•Œ*/dollColor != ìƒëŒ€ì˜ ëŒ ){
-									break;
-								}
-							}
-							else {//ê³µë°±ì´ë‹¤ 
-								blank++;
-								if(blank>2) break;
-							}
-						}
-						for(int j=6; j<11; j++) {//6~11
-							if(ëŒì´ë‹¤) {
-								if(/*ëŒì˜ ìƒ‰ì´ ìš°ë¦¬ì¼ ë•Œ*/dollColor == ìƒëŒ€ì˜ ëŒ ){
-									if(blank<=2 && dollCount == 4) {
-										//4ì´ìƒì¸ ê³³ì— ëŒ ë†“ê¸° 
-										//4ê°€ ë  ìˆ˜ìˆëŠ” ê²½ìš°  1 2 1, 1 1 2, 2 1 1, 2 2, 3 1, 1 3, 4
-										//ë§‰í˜€ ìˆë”ë¼ë„ ìƒëŒ€ê°€ ë°©ì–´ì— 2ê°œì˜ ëŒì„ ëª¨ë‘ ì“°ê²Œí•˜ëŠ” ê²ƒì´ ìœ ë¦¬ 
-										//0~5ê¹Œì§€ì—ì„œ ê°™ì€ ìƒ‰ì˜ ëŒì´ 4ê°œ, ê³µë°± 2ê°œ 
-										//6~1ê¹Œì§€ì—ì„œ ê°™ì€ ìƒ‰ì˜ ëŒì´ 4ê°œ, ê³µë°± 2ê°œ 
-									}
-									else {
-										dollCount++;
-									}
-								}	
-								else if(/*ëŒì˜ ìƒ‰ì´ ìƒëŒ€ì¼ ë•Œ*/dollColor != ìƒëŒ€ì˜ ëŒ ){
-									break;
-								}
-							}
-							else {//ê³µë°±ì´ë‹¤
-								blank++;
-								if(blank>2) break;
-							}
-						}
-					}
-					else if(/*ìŠ¤í‹± ì•ˆì˜ ê°’ì´ 2ë˜ëŠ” 3) {//ë‘ê°œë¥¼ ë‘ì–´ì„œ 4ê°œë¥¼ ë§Œë“¤ê¸° 
-						//ê°€ì¤‘ì¹˜ê°€ ê°€ì¥ ë†’ì€ ëŒì´ ë¼ 
-					}
-						
-					}
-					else if(/*ìƒëŒ€ë¥¼ ë§‰ìœ¼ë©´ì„œ ìš°ë¦¬ì˜ ìµœì„ ìˆ˜ ë†“ê¸°*/) {
-						//ë§‰í˜€ìˆì§€ ì•ŠëŠ” 3ê°œ
-						//ì–‘ì˜†ì´ ëš«ë ¤ ìˆëŠ” 2ê°œì˜ ë‘ìŒ 
-						//í•œìª½ì´ ë§‰í˜€ìˆëŠ” 2ê°œ, ì–‘ìª½ì´ ëš«ë¦° 2ê°œ
-						//í•œìª½ë§Œ ë§‰í˜€ìˆëŠ” 3ê°œ 
-					}
+				} catch(Exception e) {
 				}
+				
 			}
+			answer.clear();
+			while(!tempBlackStack.empty()) {
+				MyData.newestBlack.push(tempBlackStack.pop());
+			} // First condition/ Can we win?
+			
+			for(int i =0; i<4; i++) {
+				int key = 0;
+				try {
+					key =MyData.newestWhite.pop();
+					tempWhiteStack.push(key);
+					int infos[][] = MyData.pointsTree.get(key).getInfo();
+					int blank = 0;
+					int white = 1;
+					for(int a=0; a<4; a++) {
+						for(int b = 0; b < 11;b++) {
+							if(b == 5) {
+								if(blank <= 2 && white >=4) {
+									win = true;
+									 MyData.pointsTree.get(key).getVectorKey();
+									return answer;
+								}
+								else {
+									answer.clear();
+									blank = 1;
+									white = 0;
+								}
+							}
+							if(infos[a][b] == 0) {
+								blank++;
+								answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+							}
+							if(infos[a][b] == 2) {
+								white++;
+							}
+						}
+					}
+				} catch(Exception e) {
+				}
+				
+			}
+			while(!tempWhiteStack.empty()) {
+				MyData.newestWhite.push(tempWhiteStack.pop());
+			} // Second Condition :lose?
+			
+			
+			
 		}
 		
-		public ArrayList<Integer> findMin() {
-			int min = 100;
-			for(int i=0; i<=18; i++) {
-	        	for(int j=0; j<=18; j++) {
-	        		if(0 > MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j]>= -8) {
-	        			if(min > Math.abs(MyData.influnceMatrix[i][j])) {
-	        				min = Math.abs(MyData.influnceMatrix[i][j]);
-	        			}
-	        		}
-	        	}
-	        }
-			for(int i=0; i<=18; i++) {
-				for(int j=0; j<=18; j++) {
-					if(0 > MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j]>= -8) {
-						if(min == Math.abs(MyData.influnceMatrix[i][j])) {
-							minArray.add(19*i+j);
+		else {		// We are second
+			for(int i =0; i<4; i++) {
+				int key = 0;
+				try {
+					key =MyData.newestWhite.pop();
+					tempWhiteStack.push(key);
+				} catch(Exception e) {
+				}
+				int infos[][] = MyData.pointsTree.get(key).getInfo();
+				int blank = 0;
+				int white = 1;
+				for(int a=0; a<4; a++) {
+					for(int b = 0; b < 11;b++) {
+						if(b == 5) {
+							if(blank <= 2 && white >=4) {
+								win = true;
+								 MyData.pointsTree.get(key).getVectorKey();
+								return answer;
+							}
+							else {
+								answer.clear();
+								blank = 1;
+								white = 0;
+							}
+						}
+						if(infos[a][b] == 0) {
+							blank++;
+							answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+						}
+						if(infos[a][b] == 2) {
+							white++;
 						}
 					}
+					
 				}
 			}
-			return minArray;
-		}
-		
-		ArrayList<Integer>  findMax() {
-			int max=0;
-			for(int i=0; i<=18; i++) {
-	        	for(int j=0; j<=18; j++) {
-	        		if(max < MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j] <= 8) {
-	        			max = MyData.influnceMatrix[i][j];
-	        		}
-	        	}
-	        }
-			for(int i=0; i<=18; i++) {
-				for(int j=0; j<=18; j++) {
-					if(max == MyData.influnceMatrix[i][j]) {
-						maxArray.add(19*i+j);
+			while(!tempWhiteStack.empty()) {
+				MyData.newestWhite.push(tempWhiteStack.pop());
+			} // First condition/ Can we win?
+			
+			for(int i =0; i<4; i++) {
+				int key = 0;
+				try {
+					key =MyData.newestBlack.pop();
+					tempBlackStack.push(key);
+				} catch(Exception e) {
+				}
+				int infos[][] = MyData.pointsTree.get(key).getInfo();
+				int blank = 0;
+				int black = 1;
+				for(int a=0; a<4; a++) {
+					for(int b = 0; b < 11;b++) {
+						if(b == 5) {
+							if(blank <= 2 && black >=4) {
+								win = true;
+								 MyData.pointsTree.get(key).getVectorKey();
+								return answer;
+							}
+							else {
+								answer.clear();
+								blank = 0;
+								black = 1;
+							}
+						}
+						if(infos[a][b] == 0) {
+							blank++;
+							answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+						}
+						if(infos[a][b] == 1) {
+							black++;
+						}
 					}
+					
 				}
 			}
-			return maxArray;
+			while(!tempBlackStack.empty()) {
+				MyData.newestBlack.push(tempBlackStack.pop());
+			} // Second Condition :lose?
 		}
+		return answer;
+	}
+	
+	public int getXFromHashKey(int key) {
+		return key/19;
+	}
+	
+	public int getYFromHashKey(int key) {
+		return key%19;
+	}
+		
+//		//»ó´ë¸¦ ¸·À» ¶§¿¡´Â °¡ÁßÄ¡°¡ ÀÛÀº °÷¿¡ ³õ´Â °ÍÀÌ À¯¸®
+//			//°¡ÁßÄ¡ÀÇ °ªÀÌ °°À» °æ¿ì¿¡´Â °°Àº °¡ÁßÄ¡¸¦ °¡Áö´Â ¸ğµç µ¹ÀÇ ¿µÇâ·ÂÀ» °è»ê ÇÑ ÈÄ¿¡ µÎ±â 
+//		//°ø°İÀ» ÇÒ ¶§¿¡´Â °¡ÁßÄ¡°¡ ³ôÀº °÷¿¡ ³õ´Â °ÍÀÌ À¯¸®
+//			//°¡ÁßÄ¡ÀÇ °ªÀÌ °°À» °æ¿ì¿¡´Â °°Àº °¡ÁßÄ¡¸¦ °¡Áö´Â ¸ğµç µ¹ÀÇ ¿µÇâ·ÂÀ» °è»ê ÇÑ ÈÄ¿¡ µÎ±â 
+//		
+//		//µ¹Àº µÎ°³¸¦ µÎ¾î¾ß ÇÔÀ¸·Î ¸ğµç Á¶°ÇÀ» ÃÖ¼Ò µÎ¹ø¾¿Àº È®ÀÎÇØ¾ß
+//		int count = 0; //ÇöÀçµĞ ¹ÙµÏµ¹ÀÇ °¹¼ö 
+//		int blank = 0; //ÇöÀç ½ºÆ½ÀÇ Ä«¿îÆ®¸¦ ÀúÀå - ÀÌ Ä«¿îÆ®°¡ 3ÀÌ»óÀÌ µÇ¸é ´ÙÀ½ ½ºÆ½À¸·Î ³Ñ¾î°¨ 
+//		int dollColor; //ÇöÀç µ¹ÀÇ »ö»óÀ» ÀúÀå
+//		int dollCount = 0;//ÇöÀç °°Àº »ö»óÀÇ µ¹ÀÇ °¹¼ö¸¦ Ä«¿îÆ® 
+//		
+//		while(count<=2) {
+//			for() {//ÁÖ¾îÁø ¸ğµç µ¹µé¿¡ ´ëÇØ¼­ ½ºÆ½ µ¹±â
+//				for(int i=0; i<4; i++) {
+//					dollColor = [][5]//Áß°£°ªÀÇ µ¹ÀÇ »ö»ó ÀĞ¾î¿À±â 
+//					if(/*¿ì¸®ÀÇ µ¹ÀÏ ¶§*/){//4°³ÀÇ ¿¬¼ÓÀ» µÎ°³¸¦ ¸¸µé¸é ¹«Á¶°Ç ½Â¸® ÇÑÂÊÀÌ ¸·Èù 4°³ÀÇ ¿¬¼Ó°ú ¾ç¿·ÀÌ ¸ğµÎ ¶Õ¸° 4°³ÀÇ ¿¬¼ÓÀÌ ÃÖ¼Ò Á¶°Ç 
+//						//¸·Çô ÀÖ´õ¶óµµ »ó´ë°¡ ¹æ¾î¿¡ 2°³ÀÇ µ¹À» ¸ğµÎ ¾²°ÔÇÏ´Â °ÍÀÌ À¯¸® 
+//
+//						//0~5±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
+//						//6~11±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
+//						
+//						for(int j=0; j<6; j++) {//0~5
+//							if(µ¹ÀÌ´Ù) {
+//								if(/*µ¹ÀÇ »öÀÌ ¿ì¸®ÀÏ ¶§*/dollColor == ¿ì¸®µ¹ÀÇ »ö ){
+//									if(blank<=2 && dollCount == 4) {
+//										//4ÀÌ»óÀÎ °÷¿¡ µ¹ ³õ±â 
+//										//°¡ÁßÄ¡°¡ °¡Àå ³ôÀº °÷¿¡ ³õ±â 
+//									}
+//									else {
+//										dollCount++;
+//									}
+//								}	
+//								else if(/*µ¹ÀÇ »öÀÌ »ó´ëÀÏ ¶§*/dollColor != ¿ì¸®µ¹ÀÇ »ö){
+//									break;
+//								}
+//							}
+//							else {//°ø¹éÀÌ´Ù 
+//								blank++;
+//								if(blank>2) break;
+//							}
+//						}
+//						for(int j=6; j<11; j++) {//6~11
+//							if(µ¹ÀÌ´Ù) {
+//								if(/*µ¹ÀÇ »öÀÌ ¿ì¸®ÀÏ ¶§*/dollColor == ¿ì¸®µ¹ ){
+//									if(blank<=2 && dollCount == 4) {
+//										//4ÀÌ»óÀÎ °÷¿¡ µ¹ ³õ±â 
+//									}
+//									else {
+//										dollCount++;
+//									}
+//								}	
+//								else if(/*µ¹ÀÇ »öÀÌ »ó´ëÀÏ ¶§*/dollColor != ¿ì¸®µ¹ )){
+//									break;
+//								}
+//							}
+//							else {//°ø¹éÀÌ´Ù
+//								blank++;
+//								if(blank>2) break;
+//							}
+//						}
+//					}
+//					else if() {//»ó´ëÀÇ µ¹ÀÏ 
+//						for(int j=0; j<6; j++) {//0~5
+//							if(µ¹ÀÌ´Ù) {
+//								if(/*µ¹ÀÇ »öÀÌ ¿ì¸®ÀÏ ¶§*/dollColor == »ó´ëÀÇ µ¹ ){
+//									if(blank<=2 && dollCount == 4) {
+//										//4ÀÌ»óÀÎ °÷¿¡ µ¹ ³õ±â 
+//										//4°¡ µÉ ¼öÀÖ´Â °æ¿ì  1 2 1, 1 1 2, 2 1 1, 2 2, 3 1, 1 3, 4
+//										//¸·Çô ÀÖ´õ¶óµµ »ó´ë°¡ ¹æ¾î¿¡ 2°³ÀÇ µ¹À» ¸ğµÎ ¾²°ÔÇÏ´Â °ÍÀÌ À¯¸® 
+//										//0~5±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
+//										//6~1±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
+//									}
+//									else {
+//										dollCount++;
+//									}
+//								}	
+//								else if(/*µ¹ÀÇ »öÀÌ »ó´ëÀÏ ¶§*/dollColor != »ó´ëÀÇ µ¹ ){
+//									break;
+//								}
+//							}
+//							else {//°ø¹éÀÌ´Ù 
+//								blank++;
+//								if(blank>2) break;
+//							}
+//						}
+//						for(int j=6; j<11; j++) {//6~11
+//							if(µ¹ÀÌ´Ù) {
+//								if(/*µ¹ÀÇ »öÀÌ ¿ì¸®ÀÏ ¶§*/dollColor == »ó´ëÀÇ µ¹ ){
+//									if(blank<=2 && dollCount == 4) {
+//										//4ÀÌ»óÀÎ °÷¿¡ µ¹ ³õ±â 
+//										//4°¡ µÉ ¼öÀÖ´Â °æ¿ì  1 2 1, 1 1 2, 2 1 1, 2 2, 3 1, 1 3, 4
+//										//¸·Çô ÀÖ´õ¶óµµ »ó´ë°¡ ¹æ¾î¿¡ 2°³ÀÇ µ¹À» ¸ğµÎ ¾²°ÔÇÏ´Â °ÍÀÌ À¯¸® 
+//										//0~5±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
+//										//6~1±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
+//									}
+//									else {
+//										dollCount++;
+//									}
+//								}	
+//								else if(/*µ¹ÀÇ »öÀÌ »ó´ëÀÏ ¶§*/dollColor != »ó´ëÀÇ µ¹ ){
+//									break;
+//								}
+//							}
+//							else {//°ø¹éÀÌ´Ù
+//								blank++;
+//								if(blank>2) break;
+//							}
+//						}
+//					}
+//					else if(/*½ºÆ½ ¾ÈÀÇ °ªÀÌ 2¶Ç´Â 3*/) {//µÎ°³¸¦ µÎ¾î¼­ 4°³¸¦ ¸¸µé±â 
+//						//°¡ÁßÄ¡°¡ °¡Àå ³ôÀº µ¹ÀÌ µÅ 
+//						if(/*½ºÆ½¾È¿¡¼­ 3ÀÌ ¿¬¼ÓµÇ¾î ÀÖÀ»¶§*/) {
+//							
+//						}
+//					}
+//					else if(/*»ó´ë¸¦ ¸·À¸¸é¼­ ¿ì¸®ÀÇ ÃÖ¼±¼ö ³õ±â*/) {
+//						//¸·ÇôÀÖÁö ¾Ê´Â 3°³
+//						//¾ç¿·ÀÌ ¶Õ·Á ÀÖ´Â 2°³ÀÇ µÎ½Ö 
+//						//ÇÑÂÊÀÌ ¸·ÇôÀÖ´Â 2°³, ¾çÂÊÀÌ ¶Õ¸° 2°³
+//						//ÇÑÂÊ¸¸ ¸·ÇôÀÖ´Â 3°³ 
+//					}
+//				}
+//			}
+//		}
+//		
+//		public ArrayList<Integer> findMin() {
+//			int min = 100;
+//			for(int i=0; i<=18; i++) {
+//	        	for(int j=0; j<=18; j++) {
+//	        		if(0 > MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j]>= -8) {
+//	        			if(min > Math.abs(MyData.influnceMatrix[i][j])) {
+//	        				min = Math.abs(MyData.influnceMatrix[i][j]);
+//	        			}
+//	        		}
+//	        	}
+//	        }
+//			for(int i=0; i<=18; i++) {
+//				for(int j=0; j<=18; j++) {
+//					if(0 > MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j]>= -100) {
+//						if(min == Math.abs(MyData.influnceMatrix[i][j])) {
+//							minArray.add(19*i+j);
+//						}
+//					}
+//				}
+//			}
+//			return minArray;
+//		}
+//		
+//		ArrayList<Integer>  findMax() {
+//			int max=0;
+//			for(int i=0; i<=18; i++) {
+//	        	for(int j=0; j<=18; j++) {
+//	        		if(max < MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j] <= 100) {
+//	        			max = MyData.influnceMatrix[i][j];
+//	        		}
+//	        	}
+//	        }
+//			for(int i=0; i<=18; i++) {
+//				for(int j=0; j<=18; j++) {
+//					if(max == MyData.influnceMatrix[i][j]) {
+//						maxArray.add(19*i+j);
+//					}
+//				}
+//			}
+//			return maxArray;
+//		}
 }
