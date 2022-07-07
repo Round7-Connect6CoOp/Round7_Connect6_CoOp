@@ -124,6 +124,8 @@ public class GoBoard extends JPanel {
 					        				}
 					        				firstClick =true;
 					        				gameMatrix[i][j] = 1;
+					        				newData.getInformation(gameMatrix);
+					        				MyData.pointsTree.put(setHashKey(i, j), newData);
 					        			}
 					        			else {
 					        				if(areWeFirst) { // We are first
@@ -134,6 +136,7 @@ public class GoBoard extends JPanel {
 						        					currentColor = Color.WHITE;
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -10;
+<<<<<<< HEAD
 						        					
 						        					for(int n=0; n<4; n++) {
 						        						for(int a=1; a<=5; a++) {
@@ -188,10 +191,27 @@ public class GoBoard extends JPanel {
 						        					
 						        					
 						        					
+=======
+//						        					for(int a = 0; a < 11; a++) {
+//						        						if(a==5) continue;
+//						        						if(!MyData.influnceMatrix[i][j-5+a].equals(100) && !MyData.influnceMatrix[i][j-5+a].equals(10) && !MyData.influnceMatrix[i][j-5+a].equals(-10){
+//						        							MyData.influnceMatrix[i][j-5+a] +=-1;
+//						        						}
+//						        						else if(!MyData.influnceMatrix[i][j-5+a].equals(100) && !MyData.influnceMatrix[i][j-5+a].equals(10) && !MyData.influnceMatrix[i][j-5+a].equals(-10){
+//						        							MyData.influnceMatrix[i][j-5+a] +=-1;
+//						        						}	
+//						        								
+//						        								
+//						        						MyData.influnceMatrix[i-5+a][j] +=-1;
+//						        						MyData.influnceMatrix[i-5+a][j-5+a] +=-1;
+//						        						MyData.influnceMatrix[i+5-a][j-5+a] +=-1;
+//						        					}
+>>>>>>> 5716d12be234baec9b315eae61494190df08f3bd
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
 						        						newData.getInformation(gameMatrix);
+						        						MyData.pointsTree.put(setHashKey(i, j), newData);
 						        						whiteTurnFirst=false;
 						        						blackTurnFirst = true;
 						        						for(int k = 0; k < 2; k++) {
@@ -206,6 +226,7 @@ public class GoBoard extends JPanel {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
 						        						newData.getInformation(gameMatrix);
+								        				MyData.pointsTree.put(setHashKey(i, j), newData);
 						        						whiteTurnSecond = true;
 						        					}
 						        				}
@@ -281,6 +302,7 @@ public class GoBoard extends JPanel {
 			        			if(blockCount == blockNumber) {
 		        					isBlockFilled = true;
 		        					currentColor = Color.BLACK;
+		        					
 		        					return;
 		        				}
 			        			if(usedEllipse[i][j] == null || !usedEllipse[i][j].contains(e.getPoint())) {
@@ -296,6 +318,7 @@ public class GoBoard extends JPanel {
 				        				blockCount++;
 				        				
 				        				repaint();
+//				        				newData.getInformation(gameMatrix);
 				        			}
 			        			}
 			        		}
