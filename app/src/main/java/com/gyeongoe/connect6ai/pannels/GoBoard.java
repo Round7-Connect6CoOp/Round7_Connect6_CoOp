@@ -140,71 +140,39 @@ public class GoBoard extends JPanel {
 						        					MyData.influnceMatrix[i][j] = -10;
 						        					MyData.newestWhite.push(setHashKey(i,j));
 						        					
-						        					for(int n=0; n<4; n++) {
-						        						for(int a=1; a<=5; a++) {
-						        							if(n==0) {
-						        								if(MyData.influnceMatrix[i-a][j]!=-10 || MyData.influnceMatrix[i-a][j]!=100) {
-						        									MyData.influnceMatrix[i-a][j] +=-1;
-							        								MyData.influnceMatrix[i+a][j] +=-1;
-						        								}
-						        								
-							        						}
-							        						if(n==1) {
-							        							MyData.influnceMatrix[i-a][j+a] +=-1;
-							        							MyData.influnceMatrix[i+a][j+a] +=-1;
-							        						}
-															if(n==2) {
-																MyData.influnceMatrix[i][j+a] +=-1;
-																MyData.influnceMatrix[i][j-a] +=-1;
-															}
-															if(n==3) {
-																MyData.influnceMatrix[i+a][j+a] +=-1;
-																MyData.influnceMatrix[i-a][j-a] +=-1;
-															}
-						        						}
-						        					}
-						        					
-						        					
-						        					
-						        					
-						        					for(int a=1; a<=5; a++) {
-						        						MyData.influnceMatrix[i-a][j] +=-1;
-						        						MyData.influnceMatrix[i-a][j+a] +=-1;
-						        						MyData.influnceMatrix[i][j+a] +=-1;
-						        						MyData.influnceMatrix[i+a][j+a] +=-1;
-						        						if(MyData.influnceMatrix[i][j+a]==10 || MyData.influnceMatrix[i][j+a]==100) {
-						        						}
-						        						else if(MyData.influnceMatrix[i][j+a]==-10){
-						        							MyData.influnceMatrix[i][j+a]= -10;
-						        						}
-						        						else {
-						        							MyData.influnceMatrix[i][j+a]=-1;
-						        						}
-						        					}
-						        					
-						        					for(int a=1; a<=5; a++) {
-						        						MyData.influnceMatrix[i-a][j-a] +=-1;
-						        						MyData.influnceMatrix[i][j-a] +=-1;
-						        						MyData.influnceMatrix[i+a][j-a] +=- 1;
-						        						MyData.influnceMatrix[i+a][j] +=-1;
-						        					}
-						        					
-						        					
-						        					
-						        					
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
 						        						newData.getInformation(gameMatrix);
 						        						MyData.pointsTree.put(setHashKey(i, j), newData);
-						        						whiteTurnFirst=false;
+						        						System.out.println("Hash Key: " + setHashKey(i, j));
+						        						for(int a = 0; a < 4; a++) {
+					        								for(int b = 0; b < 11; b ++) {
+					        									System.out.println("a: " + a + " b: " + b);
+				        										System.out.println("newData.getVectorMap().get(a)[b]: " + (newData.getVectorKey()[a][b]));
+					        									if(b == 5) continue;
+					        									if(MyData.pointsTree.get(newData.getVectorKey()[a][b])!= null){
+					        										MyData oldData = MyData.pointsTree.get((newData.getVectorKey()[a][b]));
+					        										for(int c = 0; c < 4; c++) {
+								        								for(int d = 0; d < 11; d ++) {
+								        									System.out.println("oldData.getVectorKey()[c][d]: " + oldData.getVectorKey()[c][d]);
+								        									if(oldData.getVectorKey()[c][d].equals(setHashKey(i, j))) {
+								        										oldData.getInfo()[c][d] = 2;
+								        									}
+								        								}
+					        										}
+					        									}
+					        								}
+						        						}
 						        						blackTurnFirst = true;
+						        						
 						        						for(int k = 0; k < 2; k++) {
 						        							GameLogic nextStep = new GameLogic();
 						        							int p = (int) (Math.random() * 19);
 							        						int q = (int) (Math.random() * 19);
 							        						MyData data = new MyData(p, q, Color.BLACK);
 							        						MyData.clickedPoint.add(data);
+							        						
 							        						whiteTurnSecond = false;
 						        						}
 						        					}
@@ -213,6 +181,25 @@ public class GoBoard extends JPanel {
 						        						MyData.clickedPoint.add(newData);
 						        						newData.getInformation(gameMatrix);
 								        				MyData.pointsTree.put(setHashKey(i, j), newData);
+								        				System.out.println("HashKey: " + setHashKey(i, j));
+								        				for(int a = 0; a < 4; a++) {
+					        								for(int b = 0; b < 11; b ++) {
+					        									System.out.println("a: " + a + " b: " + b);
+				        										System.out.println("newData.getVectorMap().get(a)[b]: " + (newData.getVectorKey()[a][b]));
+					        									if(b == 5) continue;
+					        									if(MyData.pointsTree.get(newData.getVectorKey()[a][b])!= null){
+					        										MyData oldData = MyData.pointsTree.get((newData.getVectorKey()[a][b]));
+					        										for(int c = 0; c < 4; c++) {
+								        								for(int d = 0; d < 11; d ++) {
+								        									System.out.println("oldData.getVectorKey()[c][d]: " + oldData.getVectorKey()[c][d]);
+								        									if(oldData.getVectorKey()[c][d].equals(setHashKey(i, j))) {
+								        										oldData.getInfo()[c][d] = 2;
+								        									}
+								        								}
+					        										}
+					        									}
+					        								}
+						        						}
 						        						whiteTurnSecond = true;
 						        					}
 						        				}
@@ -227,6 +214,10 @@ public class GoBoard extends JPanel {
 					        						MyData.clickedPoint.add(newData);
 					        						newData.getInformation(gameMatrix);
 					        						blackTurnSecond = false;
+					        						for(int a = 0; a < 4; a++) {
+					        							for(int b = 0; b < 11; b++) {
+					        							}
+					        						}
 					        						for(int k = 0; k < 2; k++) {
 					        							int p = (int) (Math.random() * 19);
 						        						int q = (int) (Math.random() * 19);
@@ -236,13 +227,15 @@ public class GoBoard extends JPanel {
 					        						
 					        					}
 					        					else {
-					        						
 					        						MyData newData = new MyData(i, j, currentColor);
 					        						MyData.clickedPoint.add(newData);
 					        						newData.getInformation(gameMatrix);
+					        						for(int a = 0; a < 4; a++) {
+					        							for(int b = 0; b < 11; b++) {
+					        							}
+					        						}
 					        						blackTurnSecond = true;
 					        						whiteTurnSecond = false;
-					        						
 					        					}
 					        				}
 					        			}
@@ -252,7 +245,7 @@ public class GoBoard extends JPanel {
 				        					result = checkFinishGo(x,y);
 				        				}catch (Exception e1) {
 				        				}
-				        				System.out.println(result);
+//				        				System.out.println(result);
 				        				if(result==1) {
 				        					try {
 					        					AudioInputStream audio = AudioSystem.getAudioInputStream(new File("./assets/MP_5 Sec_Crowd_Cheer.wav"));
@@ -314,12 +307,18 @@ public class GoBoard extends JPanel {
 				else {
 					System.out.println("Press start");
 				}
-				for(int i=0; i<=18; i++) { //print MyData.influnceMatrix[i][j] Output
-		        	for(int j=0; j<=18; j++) {
-		        		System.out.print(MyData.influnceMatrix[j][i] + " | ");
-		        	}
-		        	System.out.println();
+				try {
+					for(int i=0; i<4; i++) { //print MyData.influnceMatrix[i][j] Output
+			        	for(int j=0; j<11; j++) {
+//			        		System.out.print(MyData.influnceMatrix[j][i] + " | ");
+			        		System.out.print(MyData.pointsTree.get(180).getInfo()[i][j] + " | ");
+			        	}
+			        	System.out.println();
+					}
+				} catch(Exception e1) {
+					
 				}
+				System.out.println();
 			}
 			
 
