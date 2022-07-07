@@ -139,59 +139,43 @@ public class GoBoard extends JPanel {
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -10;
 						        					MyData.newestWhite.push(setHashKey(i,j));
-						        					
-						        					for(int n=0; n<4; n++) {
-						        						for(int a=1; a<=5; a++) {
+						        					boolean checkLeft = false;
+						        					boolean checkRight = false;
+						        					int distance = 0;
+						        					for(int n = 0; n<4; n++) {
+						        						for(int a = 1; a<5;  a++) {
 						        							if(n==0) {
-						        								if(MyData.influnceMatrix[i-a][j]!=-10 || MyData.influnceMatrix[i-a][j]!=100) {
-						        									MyData.influnceMatrix[i-a][j] +=-1;
-							        								MyData.influnceMatrix[i+a][j] +=-1;
+						        								if(checkLeft == false) {
+						        									if(MyData.influnceMatrix[i][j-a]==10) {
+						        										distance = a;
+						        										checkLeft = true;
+							        								}
+						        									else {
+						        										MyData.influnceMatrix[i][j-a]+=-1;
+						        									}
 						        								}
+						        								else if(checkRight = false) {
+						        									if(MyData.influnceMatrix[i][j+a]==10) {
+						        										distance = a;
+						        										checkRight = true;
+							        								}
+						        									else {
+						        										MyData.influnceMatrix[i][j+a]+=-1;
+						        									}
+						        								}
+						        							}
+						        							else if(n==1) {
 						        								
-							        						}
-							        						if(n==1) {
-							        							MyData.influnceMatrix[i-a][j+a] +=-1;
-							        							MyData.influnceMatrix[i+a][j+a] +=-1;
-							        						}
-															if(n==2) {
-																MyData.influnceMatrix[i][j+a] +=-1;
-																MyData.influnceMatrix[i][j-a] +=-1;
-															}
-															if(n==3) {
-																MyData.influnceMatrix[i+a][j+a] +=-1;
-																MyData.influnceMatrix[i-a][j-a] +=-1;
-															}
+						        							}
+						        							else if(n==2) {
+						        								
+						        							}
+						        							else if(n==3) {
+						        								
+						        							}
 						        						}
+						        						
 						        					}
-						        					
-						        					
-						        					
-						        					
-						        					for(int a=1; a<=5; a++) {
-						        						MyData.influnceMatrix[i-a][j] +=-1;
-						        						MyData.influnceMatrix[i-a][j+a] +=-1;
-						        						MyData.influnceMatrix[i][j+a] +=-1;
-						        						MyData.influnceMatrix[i+a][j+a] +=-1;
-						        						if(MyData.influnceMatrix[i][j+a]==10 || MyData.influnceMatrix[i][j+a]==100) {
-						        						}
-						        						else if(MyData.influnceMatrix[i][j+a]==-10){
-						        							MyData.influnceMatrix[i][j+a]= -10;
-						        						}
-						        						else {
-						        							MyData.influnceMatrix[i][j+a]=-1;
-						        						}
-						        					}
-						        					
-						        					for(int a=1; a<=5; a++) {
-						        						MyData.influnceMatrix[i-a][j-a] +=-1;
-						        						MyData.influnceMatrix[i][j-a] +=-1;
-						        						MyData.influnceMatrix[i+a][j-a] +=- 1;
-						        						MyData.influnceMatrix[i+a][j] +=-1;
-						        					}
-						        					
-						        					
-						        					
-						        					
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
