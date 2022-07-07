@@ -43,7 +43,7 @@ public class GoBoard extends JPanel {
 	private boolean blackWin = false;
 	private boolean areWeFirst = false;
 	private boolean areWeSecond = false;
-	
+	CheckMatrix check = new CheckMatrix();
 	private int blockCount = 0;
 	private int blockNumber = 4;
 	
@@ -142,7 +142,7 @@ public class GoBoard extends JPanel {
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -100;
 						        					MyData.newestWhite.push(setHashKey(i,j));
-						        					CheckMatrix.checkMatrix(i, j);
+						        					check.checkMatrix(i, j);
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
