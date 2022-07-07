@@ -139,7 +139,47 @@ public class GoBoard extends JPanel {
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -10;
 						        					MyData.newestWhite.push(setHashKey(i,j));
+<<<<<<< HEAD
+						        					boolean checkLeft = false;
+						        					boolean checkRight = false;
+						        					int distance = 0;
+						        					for(int n = 0; n<4; n++) {
+						        						for(int a = 1; a<5;  a++) {
+						        							if(n==0) {
+						        								if(checkLeft == false) {
+						        									if(MyData.influnceMatrix[i][j-a]==10) {
+						        										distance = a;
+						        										checkLeft = true;
+							        								}
+						        									else {
+						        										MyData.influnceMatrix[i][j-a]+=-1;
+						        									}
+						        								}
+						        								else if(checkRight = false) {
+						        									if(MyData.influnceMatrix[i][j+a]==10) {
+						        										distance = a;
+						        										checkRight = true;
+							        								}
+						        									else {
+						        										MyData.influnceMatrix[i][j+a]+=-1;
+						        									}
+						        								}
+						        							}
+						        							else if(n==1) {
+						        								
+						        							}
+						        							else if(n==2) {
+						        								
+						        							}
+						        							else if(n==3) {
+						        								
+						        							}
+						        						}
+						        						
+						        					}
+=======
 						        					
+>>>>>>> f9a719f4c804c6e6772e3a903fb6f350e72df43e
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
