@@ -42,7 +42,6 @@ public class MyData {
 						continue;
 					}
 					if(i==0) { // horizontal
-						
 						vectorKey[i][j] = setHashKey(x,y-5+j);
 					}
 					else if(i==1) { //vertical
@@ -58,9 +57,7 @@ public class MyData {
 			} catch(Exception e) {
 				
 			}
-			
 		}
-		
 	}
 	
 	public void getInformation(int[][] gameMatrix) {
@@ -85,10 +82,13 @@ public class MyData {
 			}
 			
 		}
+//		isInDataTree(x, y);
 	}
 	
+	public void isInDataTree(int x, int y) {
+		System.out.println(pointsTree.get(setHashKey(x, y)).info[x][y]);
+	}
 	
-
 	public int getX() {
 		return x;
 	}
