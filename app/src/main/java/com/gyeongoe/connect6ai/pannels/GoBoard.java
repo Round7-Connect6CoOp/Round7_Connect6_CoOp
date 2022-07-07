@@ -138,18 +138,23 @@ public class GoBoard extends JPanel {
 						        					for(int n=0; n<4; n++) {
 						        						for(int a=1; a<=5; a++) {
 						        							if(n==0) {
-						        								MyData.influnceMatrix[i-a][j] +=-1;
-						        								MyData.influnceMatrix[i+a][j] +=-1;
+						        								if(MyData.influnceMatrix[i-a][j]!=-10 || MyData.influnceMatrix[i-a][j]!=100) {
+						        									MyData.influnceMatrix[i-a][j] +=-1;
+							        								MyData.influnceMatrix[i+a][j] +=-1;
+						        								}
+						        								
 							        						}
 							        						if(n==1) {
 							        							MyData.influnceMatrix[i-a][j+a] +=-1;
-							        							MyData.influnceMatrix[i-a][j-a] +=-1;
+							        							MyData.influnceMatrix[i+a][j+a] +=-1;
 							        						}
 															if(n==2) {
-																
+																MyData.influnceMatrix[i][j+a] +=-1;
+																MyData.influnceMatrix[i][j-a] +=-1;
 															}
 															if(n==3) {
-																
+																MyData.influnceMatrix[i+a][j+a] +=-1;
+																MyData.influnceMatrix[i-a][j-a] +=-1;
 															}
 						        						}
 						        					}
