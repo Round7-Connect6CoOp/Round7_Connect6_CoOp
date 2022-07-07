@@ -134,10 +134,11 @@ public class GameLogic {
 							}
 						}
 					}
-					else if(/*스틱 안의 값이 2또는 3) {//두개를 두어서 4개를 만들기 
+					else if(/*스틱 안의 값이 2또는 3*/) {//두개를 두어서 4개를 만들기 
 						//가중치가 가장 높은 돌이 돼 
-					}
-						
+						if(/*스틱안에서 3이 연속되어 있을때*/) {
+							
+						}
 					}
 					else if(/*상대를 막으면서 우리의 최선수 놓기*/) {
 						//막혀있지 않는 3개
@@ -162,7 +163,7 @@ public class GameLogic {
 	        }
 			for(int i=0; i<=18; i++) {
 				for(int j=0; j<=18; j++) {
-					if(0 > MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j]>= -8) {
+					if(0 > MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j]>= -100) {
 						if(min == Math.abs(MyData.influnceMatrix[i][j])) {
 							minArray.add(19*i+j);
 						}
@@ -176,7 +177,7 @@ public class GameLogic {
 			int max=0;
 			for(int i=0; i<=18; i++) {
 	        	for(int j=0; j<=18; j++) {
-	        		if(max < MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j] <= 8) {
+	        		if(max < MyData.influnceMatrix[i][j] && MyData.influnceMatrix[i][j] <= 100) {
 	        			max = MyData.influnceMatrix[i][j];
 	        		}
 	        	}
