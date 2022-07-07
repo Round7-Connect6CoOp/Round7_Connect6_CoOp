@@ -148,12 +148,12 @@ public class GoBoard extends JPanel {
 						        					boolean isItOnRightBottom = false;
 						        					boolean isItOnRightTop = false;
 						        					boolean isItOnLeftBottom = false;
-						        					int distance = 0;
+						        					int[] distance = new int[8] ;
 						        					for(int n = 0; n<8; n++) {
 						        						for(int a = 1; a<5;  a++) {
 						        							if(n==0) {
 					        									if(MyData.influnceMatrix[i][j-a]==10) {
-					        										distance = a;
+					        										distance[n] = a;
 					        										isItOnLeft = true;
 					        										break;
 						        								}
@@ -166,7 +166,7 @@ public class GoBoard extends JPanel {
 						        							}
 						        							else if(n==1) {
 						        								if(MyData.influnceMatrix[i][j+a]==10) {
-					        										distance = a;
+						        									distance[n] = a;
 					        										isItOnRight = true;
 					        										break;
 						        								}
@@ -179,7 +179,7 @@ public class GoBoard extends JPanel {
 						        							}
 						        							else if(n==2) {
 					        									if(MyData.influnceMatrix[i-a][j]==10) {
-					        										distance = a;
+					        										distance[n] = a;
 					        										isItOnTop = true;
 					        										break;
 						        								}
@@ -192,7 +192,7 @@ public class GoBoard extends JPanel {
 						        							}
 						        							else if(n==3) {
 						        								if(MyData.influnceMatrix[i+a][j]==10) {
-					        										distance = a;
+						        									distance[n] = a;
 					        										isItOnBottom = true;
 					        										break;
 						        								}
@@ -205,7 +205,7 @@ public class GoBoard extends JPanel {
 						        							}
 						        							if(n==4) {
 					        									if(MyData.influnceMatrix[i-a][j-a]==10) {
-					        										distance = a;
+					        										distance[n] = a;
 					        										isItOnLeftTop = true;
 					        										break;
 						        								}
@@ -218,7 +218,7 @@ public class GoBoard extends JPanel {
 						        							}
 						        							else if(n==5) {
 						        								if(MyData.influnceMatrix[i+a][j+a]==10) {
-					        										distance = a;
+						        									distance[n] = a;
 					        										isItOnRightBottom = true;
 					        										break;
 						        								}
@@ -231,7 +231,7 @@ public class GoBoard extends JPanel {
 						        							}
 						        							else if(n==6) {
 					        									if(MyData.influnceMatrix[i+a][j-a]==10) {
-					        										distance = a;
+					        										distance[n] = a;
 					        										isItOnRightTop = true;
 					        										break;
 						        								}
@@ -243,21 +243,84 @@ public class GoBoard extends JPanel {
 					        									}
 						        							}
 						        							else if(n==7) {
-						        								if(MyData.influnceMatrix[i+a][j]==10) {
-					        										distance = a;
+						        								if(MyData.influnceMatrix[i-a][j+a]==10) {
+						        									distance[n] = a;
 					        										isItOnLeftBottom = true;
 					        										break;
 						        								}
-					        									else if(MyData.influnceMatrix[i+a][j]==100) {
+					        									else if(MyData.influnceMatrix[i-a][j+a]==100) {
 					        										break;
 						        								}
 					        									else {
-					        										MyData.influnceMatrix[i+a][j]+=(-1);
+					        										MyData.influnceMatrix[i-a][j+a]+=(-1);
 					        									}
 						        							}
 						        						}
-						        						
 						        					}
+						        					//END POINT: Matrix scan
+						        					
+						        					for(int n = 0; n < 4; n++) {
+					        							if(n == 0) {
+					        								if((isItOnLeft || isItOnRight) && !(isItOnLeft && isItOnRight)) {
+					        									if(isItOnLeft) {
+					        										for(int m = 1; m < 4-distance[1]; m++) {
+					        											MyData.influnceMatrix[i][j+m] = -1;
+					        											for(int a = 0; a<4; a++) {
+					        												int blackCount = 0;
+							        										int whiteCount = 0;
+											        						for(int b = 0; b<11;  b++) {
+											        							if(b == 5) continue;
+											        							if(a == 0) {
+											        								Color c = MyData.pointsTree.get(setHashKey(i,j+m-5+b)).getColor();
+												        							if(b< 5) {
+												        								if(c.equals(Color.BLACK)) {
+									        												if(whiteCount != 0) {
+									        													whiteCount = 0;
+									        												}
+									        												blackCount++;
+									        											}
+									        											else if(c.equals(Color.WHITE)) {
+									        												if(blackCount != 0) {
+									        													blackCount = 0;
+									        												}
+									        												whiteCount++;
+									        											}
+												        							}
+												        							else {
+												        								if(c.equals(Color.BLACK)) {
+									        												if(whiteCount == 0) {
+									        													blackCount++;
+									        												}
+									        												else {
+									        													break;
+									        												}
+									        											}
+									        											else if(c.equals(Color.WHITE)) {
+									        												if(blackCount == 0) {
+									        													whiteCount++;
+									        												}
+									        												else {
+									        													break;
+									        												}
+									        											}
+									        											else if(c.equals(Color.RED)) {
+									        												break;
+									        											}
+												        							}
+												        						}
+										        							}
+											        						MyData.influnceMatrix[i][j+m] += blackCount - whiteCount -1;
+					        											}
+					        											
+					        										}
+					        									}
+					        									else { // isItOnRight
+					        										
+					        									}
+					        								}
+					        							}
+						        					}
+						        					
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
