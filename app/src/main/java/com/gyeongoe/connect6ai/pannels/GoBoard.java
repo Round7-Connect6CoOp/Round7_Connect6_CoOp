@@ -43,7 +43,7 @@ public class GoBoard extends JPanel {
 	private boolean blackWin = false;
 	private boolean areWeFirst = false;
 	private boolean areWeSecond = false;
-	
+	CheckMatrix check = new CheckMatrix();
 	private int blockCount = 0;
 	private int blockNumber = 4;
 	
@@ -121,9 +121,13 @@ public class GoBoard extends JPanel {
 					        					for(int k = 0; k < 2; k++) {
 				        							int p = 10;
 					        						int q = 9+k;
+					        						
 					        						MyData.newestBlack.push(setHashKey(p,q));
 					        						MyData data = new MyData(p, q, Color.WHITE);
+					        						
+					        						check.checkMatrix(p, q);
 					        						MyData.clickedPoint.add(data);
+					        						gameMatrix[p][q] = 2;
 				        						}
 					        					blackTurnFirst = true;
 					        				}
@@ -142,7 +146,7 @@ public class GoBoard extends JPanel {
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -100;
 						        					MyData.newestWhite.push(setHashKey(i,j));
-						        					CheckMatrix.checkMatrix(i, j);
+						        					check.checkMatrix(i, j);
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
@@ -164,15 +168,33 @@ public class GoBoard extends JPanel {
 					        								}
 						        						}
 						        						blackTurnFirst = true;
-						        						
+						        						GameLogic nextStep = new GameLogic(i ,j);
+						        						ArrayList <Integer> best = nextStep.makeTheBestDecision();
 						        						for(int k = 0; k < 2; k++) {
-//						        							GameLogic nextStep = new GameLogic();
-						        							int p = (int) (Math.random() * 19);
-							        						int q = (int) (Math.random() * 19);
+						        							
+						        							int p = getXFromHashKey(best.get(k));
+							        						int q =  getYFromHashKey(best.get(k));
+							        						check.checkMatrix(i, j);
 							        						MyData data = new MyData(p, q, Color.BLACK);
 							        						MyData.clickedPoint.add(data);
-							        						
+							        						MyData.newestBlack.push(setHashKey(p,q));
+							        						check.checkMatrix(p, q);
 							        						whiteTurnSecond = false;
+							        						for(int a = 0; a < 4; a++) {
+						        								for(int b = 0; b < 11; b ++) {
+						        									if(b == 5) continue;
+						        									if(MyData.pointsTree.get(data.getVectorKey()[a][b])!= null){
+						        										MyData oldData = MyData.pointsTree.get((data.getVectorKey()[a][b]));
+						        										for(int c = 0; c < 4; c++) {
+									        								for(int d = 0; d < 11; d ++) {
+									        									if(oldData.getVectorKey()[c][d].equals(setHashKey(i, j))) {
+									        										oldData.getInfo()[c][d] = 2;
+									        									}
+									        								}
+						        										}
+						        									}
+						        								}
+							        						}
 						        						}
 						        					}
 						        					else {
@@ -204,6 +226,7 @@ public class GoBoard extends JPanel {
 					        					y = j;
 					        					currentColor = Color.BLACK;
 					        					gameMatrix[i][j] = 1;
+					        					MyData.newestBlack.push(19*i+j);
 					        					if(blackTurnSecond) {
 					        						MyData newData = new MyData(i, j, currentColor);
 					        						MyData.clickedPoint.add(newData);
@@ -224,11 +247,29 @@ public class GoBoard extends JPanel {
 				        									}
 				        								}
 					        						}
+					        						GameLogic nextStep = new GameLogic(i ,j);
+					        						ArrayList <Integer> best = nextStep.makeTheBestDecision();
 					        						for(int k = 0; k < 2; k++) {
-					        							int p = (int) (Math.random() * 19);
-						        						int q = (int) (Math.random() * 19);
+					        							
+					        							int p = getXFromHashKey(best.get(k));
+						        						int q =  getYFromHashKey(best.get(k));
 						        						MyData data = new MyData(p, q, Color.WHITE);
 						        						MyData.clickedPoint.add(data);
+						        						for(int a = 0; a < 4; a++) {
+					        								for(int b = 0; b < 11; b ++) {
+					        									if(b == 5) continue;
+					        									if(MyData.pointsTree.get(data.getVectorKey()[a][b])!= null){
+					        										MyData oldData = MyData.pointsTree.get((data.getVectorKey()[a][b]));
+					        										for(int c = 0; c < 4; c++) {
+								        								for(int d = 0; d < 11; d ++) {
+								        									if(oldData.getVectorKey()[c][d].equals(setHashKey(i, j))) {
+								        										oldData.getInfo()[c][d] = 2;
+								        									}
+								        								}
+					        										}
+					        									}
+					        								}
+						        						}
 					        						}
 					        						
 					        					}
