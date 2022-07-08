@@ -43,7 +43,7 @@ public class GoBoard extends JPanel {
 	private boolean blackWin = false;
 	private boolean areWeFirst = false;
 	private boolean areWeSecond = false;
-	
+	CheckMatrix check = new CheckMatrix();
 	private int blockCount = 0;
 	private int blockNumber = 4;
 	
@@ -121,9 +121,13 @@ public class GoBoard extends JPanel {
 					        					for(int k = 0; k < 2; k++) {
 				        							int p = 10;
 					        						int q = 9+k;
+					        						
 					        						MyData.newestBlack.push(setHashKey(p,q));
 					        						MyData data = new MyData(p, q, Color.WHITE);
+					        						
+					        						check.checkMatrix(p, q);
 					        						MyData.clickedPoint.add(data);
+					        						gameMatrix[p][q] = 2;
 				        						}
 					        					blackTurnFirst = true;
 					        				}
@@ -142,7 +146,7 @@ public class GoBoard extends JPanel {
 						        					//START POINT: working on influnce Matrix!
 						        					MyData.influnceMatrix[i][j] = -100;
 						        					MyData.newestWhite.push(setHashKey(i,j));
-						        					CheckMatrix.checkMatrix(i, j);
+						        					check.checkMatrix(i, j);
 						        					if(whiteTurnSecond) {
 						        						MyData newData = new MyData(i, j, currentColor);
 						        						MyData.clickedPoint.add(newData);
@@ -166,12 +170,15 @@ public class GoBoard extends JPanel {
 						        						blackTurnFirst = true;
 						        						
 						        						for(int k = 0; k < 2; k++) {
-//						        							GameLogic nextStep = new GameLogic();
-						        							int p = (int) (Math.random() * 19);
-							        						int q = (int) (Math.random() * 19);
+						        							
+						        							GameLogic nextStep = new GameLogic(i ,j);
+						        							
+						        							int p = getXFromHashKey(nextStep.makeTheBestDecision().get(k));
+							        						int q =  getYFromHashKey(nextStep.makeTheBestDecision().get(k));
+							        						check.checkMatrix(i, j);
 							        						MyData data = new MyData(p, q, Color.BLACK);
 							        						MyData.clickedPoint.add(data);
-							        						
+							        						check.checkMatrix(p, q);
 							        						whiteTurnSecond = false;
 						        						}
 						        					}

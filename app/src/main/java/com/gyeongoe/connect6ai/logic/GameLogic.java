@@ -32,6 +32,14 @@ public class GameLogic {
 		this.y1 = y1;
 		this.y2 = y2;
 	}
+	public GameLogic(){
+	}
+	public GameLogic(int i, int j){
+		this.x1 = i;
+		this.y1 = j;
+		answer.add(x1*19+y1+1);
+		answer.add((x1+1)*19+y1);
+	}
 		//1 - 우리말이 4개 이상인 곳 찾기 - 상대가 우리의 말을 막는데 3개이상의 돌이 필요한 경우 
 		//2 - 상대말이 이길 수 있는 4개가 연속된 스틱을 찾아 막기 
 			//2-1 우리의 말이 4개가 될 수 있는 경우 
@@ -39,6 +47,8 @@ public class GameLogic {
 			//2-3 우리의 말이 2개가 될 수 있는 경우
 		//3 - 우리의 말을 연속해 4,5개를 만들 수 있는 경우 
 		//4 - 상대의 3이나 2를 막으면서 우리가 3, 2가 될 수 있는 자리 선택 
+	
+	
 	public ArrayList<Integer> makeTheBestDecision(){
 		System.out.println(areWeFirst);
 		if(areWeFirst) {
@@ -50,12 +60,20 @@ public class GameLogic {
 					int infos[][] = MyData.pointsTree.get(key).getInfo();
 					int blank = 0;
 					int black = 1;
+					answer.clear();
 					for(int a=0; a<4; a++) {
 						for(int b = 0; b < 11;b++) {
-							if(b == 5) {
-								if((blank + black == 6) &&(blank >=2)) {
+							if(infos[a][b] == 0) {
+								
+								blank++;
+								answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+							}
+							if(infos[a][b] == 1) {
+								black++;
+							}
+							if(b == 5 || b == 10) {
+								if((blank + black == 6) &&(blank <=2)) {
 									win = true;
-									 MyData.pointsTree.get(key).getVectorKey();
 									return answer;
 								}
 								else {
@@ -63,13 +81,6 @@ public class GameLogic {
 									blank = 0;
 									black = 1;
 								}
-							}
-							if(infos[a][b] == 0) {
-								blank++;
-								answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
-							}
-							if(infos[a][b] == 1) {
-								black++;
 							}
 						}
 					}
@@ -92,24 +103,26 @@ public class GameLogic {
 					int white = 1;
 					for(int a=0; a<4; a++) {
 						for(int b = 0; b < 11;b++) {
-							if(b == 5) {
+							if(b == 5|| b ==10) {
 								if(blank <= 2 && white >=4) {
-									win = true;
-									 MyData.pointsTree.get(key).getVectorKey();
+//									for(Integer whiteKey: answer){
+//										getXFromHashKey(whiteKey);
+//									}
 									return answer;
 								}
 								else {
 									answer.clear();
-									blank = 1;
-									white = 0;
+									blank = 0;
+									white = 1;
 								}
 							}
 							if(infos[a][b] == 0) {
 								blank++;
-								answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+								
 							}
 							if(infos[a][b] == 2) {
 								white++;
+								answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
 							}
 						}
 					}
@@ -121,7 +134,7 @@ public class GameLogic {
 				MyData.newestWhite.push(tempWhiteStack.pop());
 			} // Second Condition :lose?
 			
-			for(int i =0; i<3; i++) {
+			for(int i =0; i<4; i++) {
 				int key = 0;
 				try {
 					key =MyData.newestBlack.pop();
@@ -130,25 +143,72 @@ public class GameLogic {
 					int blank = 0;
 					int black = 1;
 					for(int a=0; a<4; a++) {
-						for(int b = 0; b < 11;b++) {
-							if(b == 5) {
-								if((blank + black == 6) &&(blank >=2)) {
-									win = true;
-									 MyData.pointsTree.get(key).getVectorKey();
-									return answer;
+						if(infos[a][5] != 2) {
+							for(int b = 0; b < 11;b++) {
+								if(b == 5) {
+									if((blank + black == 4) &&(blank >=2)) {
+										
+										 MyData.pointsTree.get(key).getVectorKey();
+										return answer;
+									}
+									else {
+										answer.clear();
+										blank = 0;
+										black = 1;
+									}
 								}
-								else {
-									answer.clear();
-									blank = 0;
-									black = 1;
+								
+								if(infos[a][b] == 0) {
+									blank++;
+									answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+								}
+								if(infos[a][b] == 1) {
+									black++;
 								}
 							}
-							if(infos[a][b] == 0) {
-								blank++;
-								answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+						}
+						else if(infos[a][0] != 2) {
+							for(int b = 0; b < 6;b++) {
+								if(b == 5) {
+									if((blank + black == 4) &&(blank >=2)) {
+										return answer;
+									}
+									else {
+										answer.clear();
+										blank = 0;
+										black = 1;
+									}
+								}
+								
+								if(infos[a][b] == 0) {
+									blank++;
+									answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+								}
+								if(infos[a][b] == 1) {
+									black++;
+								}
 							}
-							if(infos[a][b] == 1) {
-								black++;
+						}
+						else if(infos[a][10] != 2) {
+							for(int b = 5; b < 11;b++) {
+								if(b == 10) {
+									if((blank + black == 4) &&(blank >=2)) {
+										return answer;
+									}
+									else {
+										answer.clear();
+										blank = 0;
+										black = 1;
+									}
+								}
+								
+								if(infos[a][b] == 0) {
+									blank++;
+									answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+								}
+								if(infos[a][b] == 1) {
+									black++;
+								}
 							}
 						}
 					}
@@ -159,22 +219,20 @@ public class GameLogic {
 			answer.clear();
 			while(!tempBlackStack.empty()) {
 				MyData.newestBlack.push(tempBlackStack.pop());
-			} 
+			} //third
 			
 			for(int i =0; i<3; i++) {
 				int key = 0;
 				try {
 					key =MyData.newestWhite.pop();
 					tempWhiteStack.push(key);
-					int infos[][] = MyData.pointsTree.get(key).getInfo();
+					int[][] infos = MyData.pointsTree.get(key).getInfo();
 					int blank = 0;
 					int white = 1;
 					for(int a=0; a<4; a++) {
 						for(int b = 0; b < 11;b++) {
 							if(b == 5) {
 								if(blank <= 2 && white >=4) {
-									win = true;
-									 MyData.pointsTree.get(key).getVectorKey();
 									return answer;
 								}
 								else {
@@ -198,7 +256,7 @@ public class GameLogic {
 			}
 			while(!tempWhiteStack.empty()) {
 				MyData.newestWhite.push(tempWhiteStack.pop());
-			} // Second Condition :lose?
+			} // forth defense?
 			
 		}
 		
