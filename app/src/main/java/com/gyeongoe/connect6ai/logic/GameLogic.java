@@ -32,13 +32,13 @@ public class GameLogic {
 		this.y1 = y1;
 		this.y2 = y2;
 	}
-		//1 - ¿ì¸®¸»ÀÌ 4°³ ÀÌ»óÀÎ °÷ Ã£±â - »ó´ë°¡ ¿ì¸®ÀÇ ¸»À» ¸·´Âµ¥ 3°³ÀÌ»óÀÇ µ¹ÀÌ ÇÊ¿äÇÑ °æ¿ì 
-		//2 - »ó´ë¸»ÀÌ ÀÌ±æ ¼ö ÀÖ´Â 4°³°¡ ¿¬¼ÓµÈ ½ºÆ½À» Ã£¾Æ ¸·±â 
-			//2-1 ¿ì¸®ÀÇ ¸»ÀÌ 4°³°¡ µÉ ¼ö ÀÖ´Â °æ¿ì 
-			//2-2 ¿ì¸®ÀÇ ¸»ÀÌ 3°³°¡ µÉ ¼ö ÀÖ´Â °æ¿ì 
-			//2-3 ¿ì¸®ÀÇ ¸»ÀÌ 2°³°¡ µÉ ¼ö ÀÖ´Â °æ¿ì
-		//3 - ¿ì¸®ÀÇ ¸»À» ¿¬¼ÓÇØ 4,5°³¸¦ ¸¸µé ¼ö ÀÖ´Â °æ¿ì 
-		//4 - »ó´ëÀÇ 3ÀÌ³ª 2¸¦ ¸·À¸¸é¼­ ¿ì¸®°¡ 3, 2°¡ µÉ ¼ö ÀÖ´Â ÀÚ¸® ¼±ÅÃ 
+		//1 - ï¿½ì¸®ï¿½ï¿½ï¿½ï¿½ 4ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã£ï¿½ï¿½ - ï¿½ï¿½ë°¡ ï¿½ì¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Âµï¿½ 3ï¿½ï¿½ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
+		//2 - ï¿½ï¿½ë¸»ï¿½ï¿½ ï¿½Ì±ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ 4ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Óµï¿½ ï¿½ï¿½Æ½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+			//2-1 ï¿½ì¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 4ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ 
+			//2-2 ï¿½ì¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ 
+			//2-3 ï¿½ì¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
+		//3 - ï¿½ì¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 4,5ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ 
+		//4 - ï¿½ï¿½ï¿½ï¿½ï¿½ 3ï¿½Ì³ï¿½ 2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½é¼­ ï¿½ì¸®ï¿½ï¿½ 3, 2ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	public ArrayList<Integer> makeTheBestDecision(){
 		System.out.println(areWeFirst);
 		if(areWeFirst) {
@@ -291,132 +291,36 @@ public class GameLogic {
 	public int getYFromHashKey(int key) {
 		return key%19;
 	}
-		
-//		//»ó´ë¸¦ ¸·À» ¶§¿¡´Â °¡ÁßÄ¡°¡ ÀÛÀº °÷¿¡ ³õ´Â °ÍÀÌ À¯¸®
-//			//°¡ÁßÄ¡ÀÇ °ªÀÌ °°À» °æ¿ì¿¡´Â °°Àº °¡ÁßÄ¡¸¦ °¡Áö´Â ¸ðµç µ¹ÀÇ ¿µÇâ·ÂÀ» °è»ê ÇÑ ÈÄ¿¡ µÎ±â 
-//		//°ø°ÝÀ» ÇÒ ¶§¿¡´Â °¡ÁßÄ¡°¡ ³ôÀº °÷¿¡ ³õ´Â °ÍÀÌ À¯¸®
-//			//°¡ÁßÄ¡ÀÇ °ªÀÌ °°À» °æ¿ì¿¡´Â °°Àº °¡ÁßÄ¡¸¦ °¡Áö´Â ¸ðµç µ¹ÀÇ ¿µÇâ·ÂÀ» °è»ê ÇÑ ÈÄ¿¡ µÎ±â 
-//		
-//		//µ¹Àº µÎ°³¸¦ µÎ¾î¾ß ÇÔÀ¸·Î ¸ðµç Á¶°ÇÀ» ÃÖ¼Ò µÎ¹ø¾¿Àº È®ÀÎÇØ¾ß
-//		int count = 0; //ÇöÀçµÐ ¹ÙµÏµ¹ÀÇ °¹¼ö 
-//		int blank = 0; //ÇöÀç ½ºÆ½ÀÇ Ä«¿îÆ®¸¦ ÀúÀå - ÀÌ Ä«¿îÆ®°¡ 3ÀÌ»óÀÌ µÇ¸é ´ÙÀ½ ½ºÆ½À¸·Î ³Ñ¾î°¨ 
-//		int dollColor; //ÇöÀç µ¹ÀÇ »ö»óÀ» ÀúÀå
-//		int dollCount = 0;//ÇöÀç °°Àº »ö»óÀÇ µ¹ÀÇ °¹¼ö¸¦ Ä«¿îÆ® 
-//		
-//		while(count<=2) {
-//			for() {//ÁÖ¾îÁø ¸ðµç µ¹µé¿¡ ´ëÇØ¼­ ½ºÆ½ µ¹±â
-//				for(int i=0; i<4; i++) {
-//					dollColor = [][5]//Áß°£°ªÀÇ µ¹ÀÇ »ö»ó ÀÐ¾î¿À±â 
-//					if(/*¿ì¸®ÀÇ µ¹ÀÏ ¶§*/){//4°³ÀÇ ¿¬¼ÓÀ» µÎ°³¸¦ ¸¸µé¸é ¹«Á¶°Ç ½Â¸® ÇÑÂÊÀÌ ¸·Èù 4°³ÀÇ ¿¬¼Ó°ú ¾ç¿·ÀÌ ¸ðµÎ ¶Õ¸° 4°³ÀÇ ¿¬¼ÓÀÌ ÃÖ¼Ò Á¶°Ç 
-//						//¸·Çô ÀÖ´õ¶óµµ »ó´ë°¡ ¹æ¾î¿¡ 2°³ÀÇ µ¹À» ¸ðµÎ ¾²°ÔÇÏ´Â °ÍÀÌ À¯¸® 
-//
-//						//0~5±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
-//						//6~11±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
-//						
-//						for(int j=0; j<6; j++) {//0~5
-//							if(µ¹ÀÌ´Ù) {
-//								if(/*µ¹ÀÇ »öÀÌ ¿ì¸®ÀÏ ¶§*/dollColor == ¿ì¸®µ¹ÀÇ »ö ){
-//									if(blank<=2 && dollCount == 4) {
-//										//4ÀÌ»óÀÎ °÷¿¡ µ¹ ³õ±â 
-//										//°¡ÁßÄ¡°¡ °¡Àå ³ôÀº °÷¿¡ ³õ±â 
-//									}
-//									else {
-//										dollCount++;
-//									}
-//								}	
-//								else if(/*µ¹ÀÇ »öÀÌ »ó´ëÀÏ ¶§*/dollColor != ¿ì¸®µ¹ÀÇ »ö){
-//									break;
-//								}
-//							}
-//							else {//°ø¹éÀÌ´Ù 
-//								blank++;
-//								if(blank>2) break;
-//							}
-//						}
-//						for(int j=6; j<11; j++) {//6~11
-//							if(µ¹ÀÌ´Ù) {
-//								if(/*µ¹ÀÇ »öÀÌ ¿ì¸®ÀÏ ¶§*/dollColor == ¿ì¸®µ¹ ){
-//									if(blank<=2 && dollCount == 4) {
-//										//4ÀÌ»óÀÎ °÷¿¡ µ¹ ³õ±â 
-//									}
-//									else {
-//										dollCount++;
-//									}
-//								}	
-//								else if(/*µ¹ÀÇ »öÀÌ »ó´ëÀÏ ¶§*/dollColor != ¿ì¸®µ¹ )){
-//									break;
-//								}
-//							}
-//							else {//°ø¹éÀÌ´Ù
-//								blank++;
-//								if(blank>2) break;
-//							}
-//						}
-//					}
-//					else if() {//»ó´ëÀÇ µ¹ÀÏ 
-//						for(int j=0; j<6; j++) {//0~5
-//							if(µ¹ÀÌ´Ù) {
-//								if(/*µ¹ÀÇ »öÀÌ ¿ì¸®ÀÏ ¶§*/dollColor == »ó´ëÀÇ µ¹ ){
-//									if(blank<=2 && dollCount == 4) {
-//										//4ÀÌ»óÀÎ °÷¿¡ µ¹ ³õ±â 
-//										//4°¡ µÉ ¼öÀÖ´Â °æ¿ì  1 2 1, 1 1 2, 2 1 1, 2 2, 3 1, 1 3, 4
-//										//¸·Çô ÀÖ´õ¶óµµ »ó´ë°¡ ¹æ¾î¿¡ 2°³ÀÇ µ¹À» ¸ðµÎ ¾²°ÔÇÏ´Â °ÍÀÌ À¯¸® 
-//										//0~5±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
-//										//6~1±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
-//									}
-//									else {
-//										dollCount++;
-//									}
-//								}	
-//								else if(/*µ¹ÀÇ »öÀÌ »ó´ëÀÏ ¶§*/dollColor != »ó´ëÀÇ µ¹ ){
-//									break;
-//								}
-//							}
-//							else {//°ø¹éÀÌ´Ù 
-//								blank++;
-//								if(blank>2) break;
-//							}
-//						}
-//						for(int j=6; j<11; j++) {//6~11
-//							if(µ¹ÀÌ´Ù) {
-//								if(/*µ¹ÀÇ »öÀÌ ¿ì¸®ÀÏ ¶§*/dollColor == »ó´ëÀÇ µ¹ ){
-//									if(blank<=2 && dollCount == 4) {
-//										//4ÀÌ»óÀÎ °÷¿¡ µ¹ ³õ±â 
-//										//4°¡ µÉ ¼öÀÖ´Â °æ¿ì  1 2 1, 1 1 2, 2 1 1, 2 2, 3 1, 1 3, 4
-//										//¸·Çô ÀÖ´õ¶óµµ »ó´ë°¡ ¹æ¾î¿¡ 2°³ÀÇ µ¹À» ¸ðµÎ ¾²°ÔÇÏ´Â °ÍÀÌ À¯¸® 
-//										//0~5±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
-//										//6~1±îÁö¿¡¼­ °°Àº »öÀÇ µ¹ÀÌ 4°³, °ø¹é 2°³ 
-//									}
-//									else {
-//										dollCount++;
-//									}
-//								}	
-//								else if(/*µ¹ÀÇ »öÀÌ »ó´ëÀÏ ¶§*/dollColor != »ó´ëÀÇ µ¹ ){
-//									break;
-//								}
-//							}
-//							else {//°ø¹éÀÌ´Ù
-//								blank++;
-//								if(blank>2) break;
-//							}
-//						}
-//					}
-//					else if(/*½ºÆ½ ¾ÈÀÇ °ªÀÌ 2¶Ç´Â 3*/) {//µÎ°³¸¦ µÎ¾î¼­ 4°³¸¦ ¸¸µé±â 
-//						//°¡ÁßÄ¡°¡ °¡Àå ³ôÀº µ¹ÀÌ µÅ 
-//						if(/*½ºÆ½¾È¿¡¼­ 3ÀÌ ¿¬¼ÓµÇ¾î ÀÖÀ»¶§*/) {
-//							
-//						}
-//					}
-//					else if(/*»ó´ë¸¦ ¸·À¸¸é¼­ ¿ì¸®ÀÇ ÃÖ¼±¼ö ³õ±â*/) {
-//						//¸·ÇôÀÖÁö ¾Ê´Â 3°³
-//						//¾ç¿·ÀÌ ¶Õ·Á ÀÖ´Â 2°³ÀÇ µÎ½Ö 
-//						//ÇÑÂÊÀÌ ¸·ÇôÀÖ´Â 2°³, ¾çÂÊÀÌ ¶Õ¸° 2°³
-//						//ÇÑÂÊ¸¸ ¸·ÇôÀÖ´Â 3°³ 
-//					}
-//				}
-//			}
-//		}
-//		
+	
+	public int getBestPosition(int n1, int n2) {
+		int x1, x2, y1, y2;
+		int m1, m2;
+		x1 = getXFromHashKey(n1);
+		y1 =  getYFromHashKey(n1);
+		x2 = getXFromHashKey(n2);
+		y2 = getYFromHashKey(n2);
+		m1 = MyData.influnceMatrix[x1][y1];
+		m2 = MyData.influnceMatrix[x2][y2];
+		if(m1>m2) return n2;
+		else return n1;
+	}
+	public int getBestPosition(int n1, int n2, int n3) {
+		int x1, x2, x3, y1, y2, y3;
+		int m1, m2, m3;
+		x1 = getXFromHashKey(n1);
+		y1 =  getYFromHashKey(n1);
+		x2 = getXFromHashKey(n2);
+		y2 = getYFromHashKey(n2);
+		x3 = getXFromHashKey(n3);
+		y3 = getYFromHashKey(n3);
+		m1 = MyData.influnceMatrix[x1][y1];
+		m2 = MyData.influnceMatrix[x2][y2];
+		m3 = MyData.influnceMatrix[x3][y3];
+		if(m3>m2 && m2>m1) return n3;
+		else if (m2>m1 && m1>m3) return n2;
+		else if(m1>m2 && m2>m3) return n1;
+	}
+	
 //		public ArrayList<Integer> findMin() {
 //			int min = 100;
 //			for(int i=0; i<=18; i++) {
