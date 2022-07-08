@@ -2183,10 +2183,14 @@ public class CheckMatrix {
 					if(isItOnTop) { //isItOnTop
 						System.out.println("It's on Top");
 						for(int m = 1; m <= 5-distance[2]; m++) {
+							if(MyData.influnceMatrix[i][j+m] == -100) continue;
+							if(MyData.influnceMatrix[i][j+m] >= 0) {
+								MyData.influnceMatrix[i][j+m] = -1;
 							if(MyData.influnceMatrix[i+m][j] == 100) continue;
 							if(MyData.influnceMatrix[i+m][j] <= 0) {
 								MyData.influnceMatrix[i+m][j] = 1;
 							}
+							//here
 							for(int a = 0; a<4; a++) {
 								int blackCount = 0;
 								int whiteCount = 0;
@@ -2309,7 +2313,7 @@ public class CheckMatrix {
         							if(a == 3) {
         								Color c = null;
         								try {
-        									c = MyData.pointsTree.get(setHashKey(i+m+5-b,j+m-5+b)).getColor();
+        									c = MyData.pointsTree.get(setHashKey(i+m+5-b,j+m+5+b)).getColor();
         									if(b< 5) {
     	        								if(c.equals(Color.BLACK)) {
     												if(whiteCount != 0) {
@@ -2353,15 +2357,16 @@ public class CheckMatrix {
         						MyData.influnceMatrix[i][j+m] += blackCount - whiteCount;
 							}
 							
+						}
 							
 						}
 					}
 					else { //isItOnBottom
 						System.out.println("It's on Bottom");
 						for(int m = 1; m <= 5-distance[3]; m++) {
-							if(MyData.influnceMatrix[i-m][j] == 100) continue;
-							if(MyData.influnceMatrix[i-m][j] <= 0) {
-								MyData.influnceMatrix[i-m][j] = 1;
+							if(MyData.influnceMatrix[i][j-m] == -100) continue;
+							if(MyData.influnceMatrix[i][j-m] >= 0) {
+								MyData.influnceMatrix[i][j-m] = -1;
 							}
 							for(int a = 0; a<4; a++) {
 								int blackCount = 0;
@@ -2369,9 +2374,12 @@ public class CheckMatrix {
         						for(int b = 0; b<11;  b++) {
         							if(b == 5) continue;
         							if(a == 0) {
+        								
+        								if(b >=5-distance[3]) break;
+
         								Color c = null;
         								try {
-        									c = MyData.pointsTree.get(setHashKey(i,j-m-5+b)).getColor();
+        									c = MyData.pointsTree.get(setHashKey(i,j-m+5+b)).getColor();
         									if(c.equals(Color.BLACK)) {
     											if(whiteCount == 0) {
     												blackCount++;
