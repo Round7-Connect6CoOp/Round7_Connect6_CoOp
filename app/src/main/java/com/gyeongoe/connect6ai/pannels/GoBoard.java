@@ -121,9 +121,13 @@ public class GoBoard extends JPanel {
 					        					for(int k = 0; k < 2; k++) {
 				        							int p = 10;
 					        						int q = 9+k;
+					        						
 					        						MyData.newestBlack.push(setHashKey(p,q));
 					        						MyData data = new MyData(p, q, Color.WHITE);
+					        						
+					        						check.checkMatrix(p, q);
 					        						MyData.clickedPoint.add(data);
+					        						gameMatrix[p][q] = 2;
 				        						}
 					        					blackTurnFirst = true;
 					        				}
@@ -166,12 +170,15 @@ public class GoBoard extends JPanel {
 						        						blackTurnFirst = true;
 						        						
 						        						for(int k = 0; k < 2; k++) {
-//						        							GameLogic nextStep = new GameLogic();
-						        							int p = (int) (Math.random() * 19);
-							        						int q = (int) (Math.random() * 19);
+						        							
+						        							GameLogic nextStep = new GameLogic(i ,j);
+						        							
+						        							int p = getXFromHashKey(nextStep.makeTheBestDecision().get(k));
+							        						int q =  getYFromHashKey(nextStep.makeTheBestDecision().get(k));
+							        						check.checkMatrix(i, j);
 							        						MyData data = new MyData(p, q, Color.BLACK);
 							        						MyData.clickedPoint.add(data);
-							        						
+							        						check.checkMatrix(p, q);
 							        						whiteTurnSecond = false;
 						        						}
 						        					}
