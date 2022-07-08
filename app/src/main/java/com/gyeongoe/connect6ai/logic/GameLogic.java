@@ -97,6 +97,7 @@ public class GameLogic {
 						for(int b = 0; b < 11;b++) {
 							if(b == 5|| b ==10) {
 								if(blank <= 2 && white >=4) {
+//									if()
 									return answer;
 								}
 								else {
@@ -123,95 +124,95 @@ public class GameLogic {
 				MyData.newestWhite.push(tempWhiteStack.pop());
 			} // Second Condition :lose?
 			
-			for(int i =0; i<4; i++) {
-				int key = 0;
-				try {
-					key =MyData.newestBlack.pop();
-					tempBlackStack.push(key);
-					int infos[][] = MyData.pointsTree.get(key).getInfo();
-					int blank = 0;
-					int black = 1;
-					for(int a=0; a<4; a++) {
-						if(infos[a][5] != 2) {
-							for(int b = 0; b < 11;b++) {
-								if(b == 5) {
-									if((blank + black >= 4) &&(blank >=2)) {
-										if(infos[a][b+1] == 0) {
-											System.out.println(answer.get(1));
-											answer.remove(1);
-											answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b+1]);
-										}
-										return answer;
-									}
-									else {
-										answer.clear();
-										blank = 0;
-										black = 1;
-									}
-								}
-								
-								if(infos[a][b] == 0) {
-									blank++;
-									answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
-								}
-								if(infos[a][b] == 1) {
-									black++;
-								}
-							}
-						}
-						else if(infos[a][0] != 2) {
-							for(int b = 0; b < 6;b++) {
-								if(b == 5) {
-									if((blank + black == 4) &&(blank >=2)) {
-										return answer;
-									}
-									else {
-										answer.clear();
-										blank = 0;
-										black = 1;
-									}
-								}
-								
-								if(infos[a][b] == 0) {
-									blank++;
-									answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
-								}
-								if(infos[a][b] == 1) {
-									black++;
-								}
-							}
-						}
-						else if(infos[a][10] != 2) {
-							for(int b = 5; b < 11;b++) {
-								if(b == 10) {
-									if((blank + black == 4) &&(blank >=2)) {
-										return answer;
-									}
-									else {
-										answer.clear();
-										blank = 0;
-										black = 1;
-									}
-								}
-								
-								if(infos[a][b] == 0) {
-									blank++;
-									answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
-								}
-								if(infos[a][b] == 1) {
-									black++;
-								}
-							}
-						}
-					}
-				} catch(Exception e) {
-				}
-				
-			}
-			answer.clear();
-			while(!tempBlackStack.empty()) {
-				MyData.newestBlack.push(tempBlackStack.pop());
-			} //third
+//			for(int i =0; i<4; i++) {
+//				int key = 0;
+//				try {
+//					key =MyData.newestBlack.pop();
+//					tempBlackStack.push(key);
+//					int infos[][] = MyData.pointsTree.get(key).getInfo();
+//					int blank = 0;
+//					int black = 1;
+//					for(int a=0; a<4; a++) {
+//						if(infos[a][5] != 2) {
+//							for(int b = 0; b < 11;b++) {
+//								if(b == 5) {
+//									if((blank + black >= 4) &&(blank >=2)) {
+//										if(infos[a][b+1] == 0) {
+//											System.out.println(answer.get(1));
+//											answer.remove(1);
+//											answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b+1]);
+//										}
+//										return answer;
+//									}
+//									else {
+//										answer.clear();
+//										blank = 0;
+//										black = 1;
+//									}
+//								}
+//								
+//								if(infos[a][b] == 0) {
+//									blank++;
+//									answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+//								}
+//								if(infos[a][b] == 1) {
+//									black++;
+//								}
+//							}
+//						}
+//						else if(infos[a][0] != 2) {
+//							for(int b = 0; b < 6;b++) {
+//								if(b == 5) {
+//									if((blank + black == 4) &&(blank >=2)) {
+//										return answer;
+//									}
+//									else {
+//										answer.clear();
+//										blank = 0;
+//										black = 1;
+//									}
+//								}
+//								
+//								if(infos[a][b] == 0) {
+//									blank++;
+//									answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+//								}
+//								if(infos[a][b] == 1) {
+//									black++;
+//								}
+//							}
+//						}
+//						else if(infos[a][10] != 2) {
+//							for(int b = 5; b < 11;b++) {
+//								if(b == 10) {
+//									if((blank + black == 4) &&(blank >=2)) {
+//										return answer;
+//									}
+//									else {
+//										answer.clear();
+//										blank = 0;
+//										black = 1;
+//									}
+//								}
+//								
+//								if(infos[a][b] == 0) {
+//									blank++;
+//									answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+//								}
+//								if(infos[a][b] == 1) {
+//									black++;
+//								}
+//							}
+//						}
+//					}
+//				} catch(Exception e) {
+//				}
+//				
+//			}
+//			answer.clear();
+//			while(!tempBlackStack.empty()) {
+//				MyData.newestBlack.push(tempBlackStack.pop());
+//			} //third
 			
 			for(int i =0; i<3; i++) {
 				int key = 0;
@@ -359,36 +360,36 @@ public class GameLogic {
 			while(!tempBlackStack.empty()) {
 				MyData.newestBlack.push(tempBlackStack.pop());
 			} // Second Condition :lose?
-			try {
-				int key =MyData.newestBlack.pop();
-				tempBlackStack.push(key);
-				int[][] infos = MyData.pointsTree.get(key).getInfo();
-				int black = 1;
-				for(int a=0; a<4; a++) {
-					for(int b = 0; b < 11; b++) {
-						if(black == 2) {
-							 MyData.pointsTree.get(key).getVectorKey();									
-							 return answer;
-						}
-						else if(infos[a][b] == 0) {
-							answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
-						}
-						else if(infos[a][b] == 1) {
-							black++;
-						}
-						else {
-							answer.clear();
-							black = 1;
-						}
-					}
-				}
-				
-			} catch(Exception e) {
-				
-			}
-			while(!tempBlackStack.empty()) {
-				MyData.newestBlack.push(tempBlackStack.pop());
-			} 
+//			try {
+//				int key =MyData.newestBlack.pop();
+//				tempBlackStack.push(key);
+//				int[][] infos = MyData.pointsTree.get(key).getInfo();
+//				int black = 1;
+//				for(int a=0; a<4; a++) {
+//					for(int b = 0; b < 11; b++) {
+//						if(black == 2) {
+//							 MyData.pointsTree.get(key).getVectorKey();									
+//							 return answer;
+//						}
+//						else if(infos[a][b] == 0) {
+//							answer.add(MyData.pointsTree.get(key).getVectorKey()[a][b]);
+//						}
+//						else if(infos[a][b] == 1) {
+//							black++;
+//						}
+//						else {
+//							answer.clear();
+//							black = 1;
+//						}
+//					}
+//				}
+//				
+//			} catch(Exception e) {
+//				
+//			}
+//			while(!tempBlackStack.empty()) {
+//				MyData.newestBlack.push(tempBlackStack.pop());
+//			} 
 		}
 		return answer;
 	}
